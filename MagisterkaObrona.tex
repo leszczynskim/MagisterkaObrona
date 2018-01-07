@@ -13,11 +13,35 @@
 \maketitle
 \tableofcontents
 
-\section{Hierarchia Chomsky'ego}
+\section{Baza Bernsteina}
+Baza Bernsteina ze względu na świetne właściwości numeryczne i geometryczne jest szeroko stosowana w systemach CAD/CAM pomimo faktu, że nie jest trójkątna (traingular ???) i nie jest najszybsza w obliczeniach.\\
+
+Ważne właściwości Bazy Bernsteina:
+\begin{itemize}
+	\item Formują bazę w $n+1$ wymiarowej przestrzeni $w^{n}$ wszystkich wielomianów stopnia nie większego niż $n$.
+	\item Sumują się do 1 dla każdego $t \in R$
+	\item Są nienegatywne w przedziale $[0,1]$ i dodatnie w $(0,1)$.
+	\item Sa symetryczne, tzn. $B^{n}_{i=0...n}(t) = B^{n}_{n-1}(1-t)$
+\end{itemize}
+
+\subsection{Algorytm de Casteljau}
+Algorytm de Casteljau służy do obliczania wartości wielomianów w Bazie Bernsteina. Jest stabilny numerycznie. 
+Niewielkim kosztem możemy uzyskąć nie tylko wartość, ale i pochodną w punkcie. Należy odczytać obie wartości algorytmu dla $n-1$ odjąć je i pomnożyć przez $n$.
+
+\subsection{Twierdzenie Weierstrassa}
+Każdą funkcję ciągłą o wartościach rzeczywistych na przedziale domkniętym $[a,b]$ można przybliżyć jednostajnie z dowolną dokładnością wielomianami.
+
+\subsection{Baza Hermite'a}
+Jeżeli znamy wartości na krańcach przedziału i znamy wartości pochodnych w tych punktach, to podstawiamy do wzoru i mamy aproksymację funkcji na przedziale.
+\subsection{Baza Lagrange'a}
+Baza nie jest triangularna (???). Można w niej interpolować.
+\subsection{Węzły Czebyszewa}
+Interpolacja w węzłach Czebyszewa jest prawie najlepsza (znika efekt Rungego).
+
+\section{Piecewise polynomials}
+\subsection{Baza B-Spline}
+They are much more complex. There are two interesting properties that are not part of the Bézier basis functions, namely: (1) the domain is subdivided by knots, and (2) basis functions are not non-zero on the entire interval. In fact, each B-spline basis function is non-zero on a few adjacent subintervals and, as a result, B-spline basis functions are quite "local".
 
 
-
-\section{Złożoność obliczeniowa algorytmu}
-\section{Postacie normalne relacyjnych baz danych}
 
 \end{document}
