@@ -3,8 +3,10 @@
 \usepackage[polish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
+\usepackage{float}
 \selectlanguage{polish}
 \usepackage{graphicx}
+\usepackage{hyperref}
 \title{I ty możesz zostać magistrem}
 \date{\today}
 
@@ -20,7 +22,7 @@ Ważne właściwości Bazy Bernsteina:
 \begin{itemize}
 	\item Formują bazę w $n+1$ wymiarowej przestrzeni $w^{n}$ wszystkich wielomianów stopnia nie większego niż $n$.
 	\item Sumują się do 1 dla każdego $t \in R$
-	\item Są nienegatywne w przedziale $[0,1]$ i dodatnie w $(0,1)$.
+	\item Są nieujemne w przedziale $[0,1]$ i dodatnie w $(0,1)$.
 	\item Sa symetryczne, tzn. $B^{n}_{i=0...n}(t) = B^{n}_{n-1}(1-t)$
 \end{itemize}
 
@@ -29,12 +31,13 @@ Algorytm de Casteljau służy do obliczania wartości wielomianów w Bazie Berns
 Niewielkim kosztem możemy uzyskąć nie tylko wartość, ale i pochodną w punkcie. Należy odczytać obie wartości algorytmu dla $n-1$ odjąć je i pomnożyć przez $n$.
 
 \subsection{Twierdzenie Weierstrassa}
-Każdą funkcję ciągłą o wartościach rzeczywistych na przedziale domkniętym $[a,b]$ można przybliżyć jednostajnie z dowolną dokładnością wielomianami.
+Każdą funkcję ciągłą o wartościach rzeczywistych na przedziale domkniętym $[a,b]$ można przybliżyć jednostajnie z dowolną dokładnością wielomianami Bernsteina. Im więcej punktów kontrolnych, tym większa dokładność.
 
 \subsection{Baza Hermite'a}
 Jeżeli znamy wartości na krańcach przedziału i znamy wartości pochodnych w tych punktach, to podstawiamy do wzoru i mamy aproksymację funkcji na przedziale.
 \subsection{Baza Lagrange'a}
 Baza nie jest triangularna (???). Można w niej interpolować.
+Wielomiany Lagrange'a pozwalają nam na interpolacje punktów, bez potrzeby rozwiązywania układów współrzędnych.
 \subsection{Węzły Czebyszewa}
 Interpolacja w węzłach Czebyszewa jest prawie najlepsza (znika efekt Rungego).
 
@@ -42,7 +45,22 @@ Interpolacja w węzłach Czebyszewa jest prawie najlepsza (znika efekt Rungego).
 \subsection{Baza B-Spline}
 They are much more complex. There are two interesting properties that are not part of the Bézier basis functions, namely: (1) the domain is subdivided by knots, and (2) basis functions are not non-zero on the entire interval. In fact, each B-spline basis function is non-zero on a few adjacent subintervals and, as a result, B-spline basis functions are quite "local".
 
-\setcounter{section}{35}
+\setcounter{section}{22}
+\section{Metody interpolacji obrotów}
+\begin{enumerate}
+	\item LERP
+	\item SLERP
+	\item Liniowa interpolacja kątów Eulera
+	\item SQUAD - interpolacja sekwencji orientacji za pomocą wzoru
+\end{enumerate}
+
+\section{Aproksymacja obszaru obrobionego}
+
+\setcounter{section}{34}
+\section{Interpolacja i aproksymacja w bazach B-spline}
+\hyperlink{Prezentacja}{http://www.cad.zju.edu.cn/home/zhx/GM/009/00-bsia.pdf} 
+
+
 \section{Powierzchnie obciętę i standard IGES}
 Standard IGES jest standardem międzynarodowym dotyczącym danych topologicznych, geometrycznych i niegeometrzyczne (np. materiały, cechy użytkowe). Na podstawie tego standardu powstał również format pliku o tej samej nazwie pozwalający na zapisanie ponad 150 różnych typów obiektów, np. powierzchni trymowanych.
 
@@ -54,6 +72,16 @@ Aby uniknąć częstych obliczeń takich jak np, sprawdzenie czy punkt leży na 
 
 
 Boundary representation składa się z dwóch części: topologii oraz geometrii (powierzchnie, krzywe oraz punkty). Główne elementy topologii to: ściany (faces), krawędzie i wierzchołki. Inne elementy to powłoka (shell) - zbiór połączonych ścianek, pętla - cykl krawędzi ograniczającej ściankę, lopp-edge links (znane także jako skrzydlaczki???) - służą do tworzenia cykli z krawędzi (edge circuits). 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Pictures/brep}
+	\caption{B-rep od prof. Marciniaka}
+\end{figure}
+
+\subsection{Porównanie CSG}
+CSG jest drzewem i zapamiętuje kolejne operacje wykonane na prymitywach. Jest budowane z prymitywów i podstawowych operacji boolowskich.\\
+B-rep ma większą liczbę operacji, np. wyciągnięcie (extrusion) i wygładzenie krawędzi (chamfer), co pozwala na bardziej "ludzkie" tworzenie modeli.
 
 \section{Metody lokalizacji obliczeń geometrycznych}
 Przykładem problemu lokalizacji obliczeń geometrycznych jest wykrycie kolizji dwóch złożonych obiektów. Zamiast sprawdzać każdy ich element z każdym, chcemy uprościć obliczenia, odrzucając obszary, w których wiemy, że kolizja raczej nie zajdzie.
@@ -69,5 +97,7 @@ Octree - dzielimy przestrzeń 3D na osiem sześcianów.\\
 	\caption{Przykład quadtree}
 \end{figure}
 
+\section{Struktura systemu do projektowania przez podanie ograniczeń}
+Zamiast sekwencyjnie rysować scenę (np. najpierw wstawiamy punkt, potem okrąg, który ma w nim środek, następnie styczną itp.), podajemy układ równań, który definiuje nam całą scenę. Jeżeli zmiennych mamy więcej niż równań to część zmiennych musi wprowadzić użytkownik jako dane wejściowe.
 
 \end{document}
