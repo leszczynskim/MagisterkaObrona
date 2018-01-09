@@ -100,4 +100,24 @@ Octree - dzielimy przestrzeń 3D na osiem sześcianów.\\
 \section{Struktura systemu do projektowania przez podanie ograniczeń}
 Zamiast sekwencyjnie rysować scenę (np. najpierw wstawiamy punkt, potem okrąg, który ma w nim środek, następnie styczną itp.), podajemy układ równań, który definiuje nam całą scenę. Jeżeli zmiennych mamy więcej niż równań to część zmiennych musi wprowadzić użytkownik jako dane wejściowe.
 
+
+\section{Pojęcie naprężenia w materiale. Wektor i tensor naprężenia}
+Naprężenie $\sigma$ (ang. stress) to miara gęstości powierzchniowych sił wewnętrznych, występujących w pewnym punkcie przekroju ośrodka ciągłego (ciała wolumetrycznego). Jednostką naprężenia jest paskal. Reprezentowany jako trój-wymiarowy symetryczny tensor drugiego rzędu.
+
+Wektor naprężenia $t$ to gęstość sił działających na element powierzchni w danym punkcie $P \in B$, gdzie $B$ to ośrodek ciągły (ciało). W przypadku sił wewnętrznych wartość $t$ w punkcie $P$ zależy od przekreju. Wektor $t$ jest skierowany wzdłuż wersora normalnego $n$ do powierzchni.
+
+Poprostu: $t$ to wektor z kierunkiem $n$, a $\sigma$ to jego wartość.
+
+\begin{equation}
+t_{i} = \sigma_{ij}n_{i}
+\end{equation}
+
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Pictures/stress.png}
+	\caption{}
+\end{figure}
+
 \end{document}
