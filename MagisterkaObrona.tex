@@ -61,6 +61,12 @@ gdzie D to dwuforma (przekształcenie dwuliniowe) określająca przybliżaną po
 Typowe zadanie z PUSNu: jest dana powierzchnia w postaci implicite. Sprawdź jaki maksymalny promień freza nie spowoduje podcięć lub o ile musimy się przesuwać, żeby frezować z zadaną tolerancją (żeby rowki miały maksymalnie jakąś wysokość).\\
 Robimy dwuformę powierzchni i freza i je odejmujemy. Sprawdzamy czy ta dwuforma jest dodatnio określona ($X^{T}DX$ > 0, dla każdego $X$). Jeżeli tak, to nie ma podcięć. Jeżeli nie, to podcięcia mogą wystąpić, ale nie muszą (chyba trzeba sprawdzić kierunki, które chcemy frezować ???).
  
+ \section{Lokalne i globalne algorytmy programowania 3C}
+ Lokalne - tak jak frezowaliśmy nasze modele. APT to język do programowania urządzen sterowanych numerycznie (czyli do robienia ścieżek). Wyróżniamy w nim procedury TO/ON/PAST/TANTO (TANgential TO) oraz drive surface, part surface i check surface. PS - frezujemy stycznie do niej, DS - prowadzimy frez stycznie do niej, CS - na niej się zatrzymujemy.\\
+Lokalne metody nie gwarantują ścieżek bez podcięć (collision free tool paths). Natomiast metody globalne wykluczają kolizje z ostatecznym kształtem obrabianej części. Globalne metody projektujemy poprzez wyznaczenie ITO (Inverse Tool Offset). Robimy sumę Minkowskiego przeszkód z odwórconym narzędziem w przestrzeni konfiguracji.
+ 
+ \section{Metody rozwiązywania zadania odwrotnego prostych łańcuchów kinematycznych}
+ 
 \setcounter{section}{34}
 \section{Interpolacja i aproksymacja w bazach B-spline}
 \hyperlink{Prezentacja}{http://www.cad.zju.edu.cn/home/zhx/GM/009/00-bsia.pdf} 
@@ -107,11 +113,11 @@ Zamiast sekwencyjnie rysować scenę (np. najpierw wstawiamy punkt, potem okrąg
 
 
 \section{Pojęcie naprężenia w materiale. Wektor i tensor naprężenia}
-Naprężenie $\sigma$ (ang. stress) to miara gęstości powierzchniowych sił wewnętrznych, występujących w pewnym punkcie przekroju ośrodka ciągłego (ciała wolumetrycznego). Jednostką naprężenia jest paskal. Reprezentowany jako trój-wymiarowy symetryczny tensor drugiego rzędu.
+Naprężenie $\sigma$ (ang. stress) to miara gęstości powierzchniowych sił wewnętrznych, występujących w pewnym punkcie przekroju ośrodka ciągłego (ciała wolumetrycznego). Jednostką naprężenia jest paskal. Reprezentowany jako trójwymiarowy symetryczny tensor drugiego rzędu.
 
 Wektor naprężenia $t$ to gęstość sił działających na element powierzchni w danym punkcie $P \in B$, gdzie $B$ to ośrodek ciągły (ciało). W przypadku sił wewnętrznych wartość $t$ w punkcie $P$ zależy od przekreju. Wektor $t$ jest skierowany wzdłuż wersora normalnego $n$ do powierzchni.
 
-Poprostu: $t$ to wektor z kierunkiem $n$, a $\sigma$ to jego wartość.
+Po prostu: $t$ to wektor z kierunkiem $n$, a $\sigma$ to jego wartość.
 
 \begin{equation}
 t_{i} = \sigma_{ij}n_{i}
@@ -166,9 +172,9 @@ Specjalny przypadek tw. Stokesa, w którym funkcja podcałkowa po objętości to
 
 $F$ to pole wektorowe zdefiniowane w sąsiedztwie $V$. $n$ to pole normalnych (skierowanych na zewnątrz, ang. outward) do brzegu $\partial V$.
 
-Załóżmy, że chcemy napompować koło samochodowe, które jest idealną bryła sztywną (koło nie rozszerzy się po dodaniu powietrza). Co się stanie z powietrzem w środku koła? Powietrzne w środku koło skurczy się.
+Załóżmy, że chcemy napompować koło samochodowe, które jest idealną bryła sztywną (koło nie rozszerzy się po dodaniu powietrza). Co się stanie z powietrzem w środku koła? Powietrzne w środku koła skurczy się.
 
-Jeśli $F$ to pole wektorowe reprezentujące strumień cieczy to dywergencja div $F$ reprezentuje ekspansje lub skurczanie sie tej cieczy. Tw. o dywergencji mówi, że całkowita ekspansja strumienia cieczy w jakims trójwymiarowym regionie $V$ jest równa całkowitemu strumieniowi cieczy na zewnątrz brzegu $V$.
+Jeśli $F$ to pole wektorowe reprezentujące strumień cieczy to dywergencja div $F$ reprezentuje ekspansję lub skurczanie sie tej cieczy. Tw. o dywergencji mówi, że całkowita ekspansja strumienia cieczy w jakims trójwymiarowym regionie $V$ jest równa całkowitemu strumieniowi cieczy na zewnątrz brzegu $V$.
 
 W naszym przykładzie koło stanowi region $V$. Pompowanie powietrza do środka koła w kierunki przeciwnym do normalnej $n$ daje nam ujemna wartość $\int_{\partial V} (F \cdot n) dA$. Co oznacza, że wartość $\int_{V} (\nabla \cdot F) dV$ też jest ujemna, co oznacza, że powietrze skurczyło się. Dokładnie to co założyliśmy.
 
