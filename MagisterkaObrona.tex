@@ -75,6 +75,21 @@ Lokalne metody nie gwarantują ścieżek bez podcięć (collision free tool path
  $$F_{i(i+1)} = R_{x_{i}}(a_{i}) T_{x_{i}}(u_{i}) T_{z_{i+1}}(h_{i+1}) R_{z_{i+1}}(b_{i+1})$$
  
  \section{Algorytmy szukania drogi}
+ Flood-Fill - jak w robocie 2D na PUSNie. Mało optymalny, łatwy w implementacji. \\
+ ~\\
+ PRM (Probabilistic Roadmap):
+ \begin{enumerate}
+ 	\item Losujemy punkty w przestrzeni konfiguracji, które nie są w przeszkodach.
+ 	\item Próbujemy połączyć każdy punkt z każdym (czyli łączymy, gdy nie ma między nimi kolizji).
+ 	\item Szukamy ścieżki.
+ \end{enumerate} 
+Przydatną strukturą danych są kd-drzewa.\\
+~\\
+RRT (Rapidly-exploring random tree):
+\begin{enumerate}
+	\item Sprawdzamy czy wierchołek startowy jest dopuszczalny (nie jest w kolizji).
+	\item Wykonujemy k kroków polegających na wylosowaniu nowej konfiguracji $q_{i}$ i łączymy ją do najbliższego wierzchołka (jeżeli nie ma kolizji).
+\end{enumerate} 
  
 \setcounter{section}{34}
 \section{Interpolacja i aproksymacja w bazach B-spline}
