@@ -7,6 +7,7 @@
 \selectlanguage{polish}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{amsmath}
 \title{I ty możesz zostać magistrem}
 \date{\today}
 
@@ -115,7 +116,7 @@ Zamiast sekwencyjnie rysować scenę (np. najpierw wstawiamy punkt, potem okrąg
 \section{Pojęcie naprężenia w materiale. Wektor i tensor naprężenia}
 Naprężenie $\sigma$ (ang. stress) to miara gęstości powierzchniowych sił wewnętrznych, występujących w pewnym punkcie przekroju ośrodka ciągłego (ciała wolumetrycznego). Jednostką naprężenia jest paskal. Reprezentowany jako trójwymiarowy symetryczny tensor drugiego rzędu.
 
-Wektor naprężenia $t$ to gęstość sił działających na element powierzchni w danym punkcie $P \in B$, gdzie $B$ to ośrodek ciągły (ciało). W przypadku sił wewnętrznych wartość $t$ w punkcie $P$ zależy od przekreju. Wektor $t$ jest skierowany wzdłuż wersora normalnego $n$ do powierzchni.
+Wektor naprężenia $t$ to gęstość sił działających na element powierzchni w danym punkcie $P \in B$, gdzie $B$ to ośrodek ciągły (ciało). W przypadku sił wewnętrznych wartość $t$ w punkcie $P$ zależy od przekroju. Wektor $t$ jest skierowany wzdłuż wersora normalnego $n$ do powierzchni.
 
 Po prostu: $t$ to wektor z kierunkiem $n$, a $\sigma$ to jego wartość.
 
@@ -134,8 +135,37 @@ t_{i} = \sigma_{ij}n_{i}
 \section{Algebra Zewnętrzna}
 
 \subsection{Forma różniczkowa (k-forma)}
+Forma różniczkowa albo k-forma to tensor rzędu $k$, który jest antysymetryczny względem wymiany par indeksów. 1-form $\omega_{1}$ o wymiarze $n$:
+\begin{equation}
+\omega_{1} = a_{1} dx_{1} + a_{2} dx_{2} + ... + a_{n} dx_{n} = a_{i} dx_{i}
+\end{equation}
+gdzie $a_{i}$ są funkcjami $a_{i}(x_{1}, x_{2}, ..., x_{n})$
+
+Przykład 2-formy:
+\begin{equation}
+\omega_{2} = a_{1} dx_{1} \wedge dx_{2} + a_{2} dx_{1} \wedge dx_{3} + a_{3} dx_{2} \wedge dx_{3}
+\end{equation}
+gdzie operator $(\cdot) \wedge (\cdot)$ to iloczyn zewnętrzny zdefiniowany:
+\begin{enumerate}
+\item $t \wedge s = - s \wedge t$
+\item $t \wedge t = 0$
+\item $t \wedge (r + s) = t \wedge r + t \wedge s$
+\end{enumerate}
 
 \subsection{Pochodna zewnętrzna}
+Pochodna zewnętrzna k-formy $\omega$ to $k+1$-forma $d \omega$.
+Jeśli 1-forma $\omega$ to:
+
+\begin{equation}
+\omega = a dx + b dy
+\end{equation}
+
+wtedy $d \omega$ jest zdefiniowane jako:
+\begin{align*}
+d \omega = d(a dx + b dy) = [\frac{\partial a}{\partial x} (dx \wedge dx) + \frac{\partial a}{\partial y} (dy \wedge dx)] + [\frac{\partial b}{\partial x} (dx \wedge dy) + \frac{\partial b}{\partial y} (dy \wedge dy)] =
+\\
+\frac{\partial a}{\partial y} (dy \wedge dx) + \frac{\partial b}{\partial x} (dx \wedge dy)
+\end{align*}
 
 \subsection{Dywergencja}
 Dywergencja pola wektorowego to operator różniczkowy przyporządkowujący trójwymiarowemu (dwuwymiarowy też) polu wektorowemu pole skalarne będące formalnym iloczynem skalarnym operatora nabla $\nabla$ z polem. 
