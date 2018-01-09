@@ -55,7 +55,12 @@ They are much more complex. There are two interesting properties that are not pa
 \end{enumerate}
 
 \section{Aproksymacja obszaru obrobionego}
-
+Obszar obrobiony możemy aproksymować za pomocą paraboloidy ściśle stycznej. 
+$$d(\Delta x, \Delta y) = \frac{1}{2} [\Delta x, \Delta y] \textbf{D}  [\Delta x, \Delta y]^{T}$$
+gdzie D to dwuforma (przekształcenie dwuliniowe) określająca przybliżaną powierzchnię.\\
+Typowe zadanie z PUSNu: jest dana powierzchnia w postaci implicite. Sprawdź jaki maksymalny promień freza nie spowoduje podcięć lub o ile musimy się przesuwać, żeby frezować z zadaną tolerancją (żeby rowki miały maksymalnie jakąś wysokość).\\
+Robimy dwuformę powierzchni i freza i je odejmujemy. Sprawdzamy czy ta dwuforma jest dodatnio określona ($X^{T}DX$ > 0, dla każdego $X$). Jeżeli tak, to nie ma podcięć. Jeżeli nie, to podcięcia mogą wystąpić, ale nie muszą (chyba trzeba sprawdzić kierunki, które chcemy frezować ???).
+ 
 \setcounter{section}{34}
 \section{Interpolacja i aproksymacja w bazach B-spline}
 \hyperlink{Prezentacja}{http://www.cad.zju.edu.cn/home/zhx/GM/009/00-bsia.pdf} 
