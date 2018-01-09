@@ -125,4 +125,51 @@ t_{i} = \sigma_{ij}n_{i}
 	\caption{}
 \end{figure}
 
+\section{Algebra Zewnętrzna}
+
+\subsection{Forma różniczkowa (k-forma)}
+
+\subsection{Pochodna zewnętrzna}
+
+\subsection{Dywergencja}
+Dywergencja pola wektorowego to operator różniczkowy przyporządkowujący trójwymiarowemu (dwuwymiarowy też) polu wektorowemu pole skalarne będące formalnym iloczynem skalarnym operatora nabla $\nabla$ z polem. 
+
+Dywergencja to miara ilości strumienia wchodzącego lub wychodzącego z punktu. Dywergencja to tempo ekspansji (ang. expansion, positive divergence) lub skurczania (ang. contraction, negative divergence ) się strumienia.
+
+Jeśli dany punkt zobaczy strumień, który do niego wchodzi to zacznie krzyczeć, że wszystko się zbliża (ang. negative divergence). Jeśli dany punkt zobaczy strumień, który z niego wychodzi to zacznie krzyczeć, że wszystko sie od niego oddala (ang. positive divergence).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=1.0]{Pictures/vector_field_div.png}
+	\caption{Przykład pola wektorowego pokazujący prędkość strumienia cieczy. Strumień oddala się od początku ukladu współrzędnych (ekspansja). Ta ekspansja (ang. expansion) jest udowodniona przez dodatnią wartość dywergencji div F}
+\end{figure}
+
+\subsection{Twierdzenie Stokesa}
+Całka formy różniczkowej (k-formy) $\omega$ na brzegu $\partial \Omega$ jakieś rozmaitości (manifold) jest równa całce pochodnej zewnętrznej $d \omega$ na całości $\Omega$
+
+\begin{equation}
+\int_{\partial \Omega} \omega = \int_{\Omega} d \omega
+\end{equation}
+
+Twierdzenie Gaussa-Ostrogradskiego, podstawowe twierdzenie rachunku całkowego (Fundamental theorem of calculus) i twierdzenie Greena są specjalnymi przypadkami twierdzenia Stokesa.
+
+Tw. Stokesa umożliwia nam zamianę całki powierzchniowej na objętościową (i na odwrót)
+
+\subsection{Twierdzenie Gaussa-Ostrogradskiego}
+
+Znany także jako twierdzenie o dywergencji (Divergence theorem).
+Specjalny przypadek tw. Stokesa, w którym funkcja podcałkowa po objętości to dywergencja pola wektorowego $F$
+
+\begin{equation}
+\int_{V} (\nabla \cdot F) dV = \int_{\partial V} (F \cdot n) dA
+\end{equation}
+
+$F$ to pole wektorowe zdefiniowane w sąsiedztwie $V$. $n$ to pole normalnych (skierowanych na zewnątrz, ang. outward) do brzegu $\partial V$.
+
+Załóżmy, że chcemy napompować koło samochodowe, które jest idealną bryła sztywną (koło nie rozszerzy się po dodaniu powietrza). Co się stanie z powietrzem w środku koła? Powietrzne w środku koło skurczy się.
+
+Jeśli $F$ to pole wektorowe reprezentujące strumień cieczy to dywergencja div $F$ reprezentuje ekspansje lub skurczanie sie tej cieczy. Tw. o dywergencji mówi, że całkowita ekspansja strumienia cieczy w jakims trójwymiarowym regionie $V$ jest równa całkowitemu strumieniowi cieczy na zewnątrz brzegu $V$.
+
+W naszym przykładzie koło stanowi region $V$. Pompowanie powietrza do środka koła w kierunki przeciwnym do normalnej $n$ daje nam ujemna wartość $\int_{\partial V} (F \cdot n) dA$. Co oznacza, że wartość $\int_{V} (\nabla \cdot F) dV$ też jest ujemna, co oznacza, że powietrze skurczyło się. Dokładnie to co założyliśmy.
+
 \end{document}
