@@ -231,4 +231,57 @@ Jeśli $F$ to pole wektorowe reprezentujące strumień cieczy to dywergencja div
 
 W naszym przykładzie koło stanowi region $V$. Pompowanie powietrza do środka koła w kierunki przeciwnym do normalnej $n$ daje nam ujemna wartość $\int_{\partial V} (F \cdot n) dA$. Co oznacza, że wartość $\int_{V} (\nabla \cdot F) dV$ też jest ujemna, co oznacza, że powietrze skurczyło się. Dokładnie to co założyliśmy.
 
+\section{Projektowanie środowiska wirtuanego}
+
+\subsection{Porównanie mechanik}
+Wszystkie mechaniki są sobie równoważne. Różnią się łatwością zapisu równań dla różnych przypadków.\\
+~\\
+\textbf{Mechanika Newtona} $F = ma$. Jest dobra do systemów cząsteczkowych. Równania zależą od układu współrzędnych, w szczególności czy jest inercyjny (Wojtek patrzy na karuzelę) czy nieinercyjny (Wojtek siedzi na karuzeli). Ciężko w nim uwzględnić ograniczenia. W przypadku bryły sztywnej oprócz ruchu postępowego mamy też ruch obrotowy, który jest wyrażony wzorem $M = I\omega$. \\
+~\\
+\textbf{Mechanika d'Alamberta} ułatwia wprowadzenie ograniczeń, ale przez to wzrasta nam liczba zmiennych i równań w układzie. Gdy mamy $M$ parametrów i $U$ ograniczeń, to mamy $M + U$ równań.
+W tej mechanice mamy równania DAE (różniczkowo-algebraiczne): $U$ algebraicznych i $M$ różniczkowych.
+\begin{equation} 	
+	\begin{bmatrix}
+	m_{1}  &   &   &  
+	\\[0.3em]
+	  & m_{1} &  &   
+	\\[0.3em]
+	  &  & m_{2} &  
+	  \\[0.3em]
+	  &  &  & m_{2}
+	\end{bmatrix}
+	\begin{bmatrix}
+	\ddot{x_{1}}  
+	\\[0.3em]
+	\ddot{y_{1}}   
+	\\[0.3em]
+	\ddot{x_{2}}  
+	\\[0.3em]
+	\ddot{y_{2}}
+	\end{bmatrix}
+	= F + \lambda _{i} G_{i}	
+\end{equation}
+gdzie: \\
+$i=1:U$ \\
+$G_{i}$ - gradient i-tego ograniczenia \\
+~\\
+\textbf{Zasada prac wirtualnych} redukuje liczbę równań w mechanice d'Alamberta. Aby ją zastosować, należy wziąć wektor $v$ z przestrzeni stycznej do wszystkich ograniczeń. Siły reakcji w d'Alambercie są prostopadłe do ograniczeń, więc taki magiczny wektor $v$ nam je wszystkie wyzeruje. Dzięki temu upraszczamy układ, a liczba równań spada do $M - U$.\\
+~\\
+\textbf{Mechanika Lagrange'a} jest niezależna od układu współrzędnych. Dzięki temu możemy łatwo rozwiązywać skomplikowane układy ruchu - musimy tylko opisać parametryzację. Mechanika Lagrange'a bazuje na energii układu. 
+$$ \dfrac{d}{dt} (\dfrac{\partial L}{\partial\dot{Q_{i}}}) - \dfrac{\partial L}{\partial Q_{i}} = 0$$
+gdzie: \\
+$L = T - U$ -- funkcja Lagrange'a\\
+$T$ -- energia kinetyczna \\
+$U$ -- energia potencjalna \\
+$Q_{i}$ -- współrzędne parametryzacji\\
+~\\
+\textbf{Mechanika Hamiltona} podobnie jak w mechanice Lagrange'a potrzebujemy energii i parametryzacji. Jednak zamiast jednego równania drugiego rzedu mamy dwa równania pierwszego. Mechanika Hamiltona jest połączeniem mechaniki klasycznej z mechaniką kwantową.
+$$ \dot{p_{i}} = - \dfrac{\partial H}{\partial q_{i}} + D $$
+$$ \dot{q_{i}} = - \dfrac{\partial H}{\partial p_{i}} $$
+gdzie: \\
+$H = T + U $ -- funkcja Hamiltona
+$T$ -- energia kinetyczna \\
+$U$ -- energia potencjalna \\
+$p_{i}$ -- współrzędne pędu
+$q_{i}$ -- współrzędne parametryzacji
 \end{document}
