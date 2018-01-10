@@ -1,6 +1,6 @@
 \documentclass[12pt]{article}
 \usepackage[T1]{fontenc}
-%\usepackage[polish]{babel}
+\usepackage[polish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{float}
@@ -429,4 +429,29 @@ $T$ -- energia kinetyczna \\
 $U$ -- energia potencjalna \\
 $p_{i}$ -- współrzędne pędu
 $q_{i}$ -- współrzędne parametryzacji
+
+\subsection{Systemy dynamiczne}
+\textbf{System dynamiczny} gładkie pole wektorowe na N-wymiarowej rozmaitości różniczkowej zwanej przestrzenią stanów systemu. Każdy stan należący do tej przestrzenii może zmieniać się w czasie zgodnie z funkcją zmiany stanu (równaniem różniczkowym). \\
+System dynamiczny nie zależy od czasu, to wtedy jest autonomiczny. \\
+Jeżeli funkcja zmiany stanu jest liniowa i system jest autonomiczny to jest to system LTI (Linear Time Invariant).\\
+~\\
+\subsubsection{Stabilność}
+Na przykładzie wahadła: mamy dwa punkty równowagi - na górze i na dole. Górny nie jest stabilny, bo po wytrąceniu wahadła z tego położenia nigdy do niego nie wrócimy. Punkt na dole jest stabilny, bo wahadło do niego wraca. Stabilność z definicji oznacza, że po wytrąceniu wahadło wróci w otoczenie punktu równowagi. Jednak nasz punkt na dole wahadła jest "bardziej" stabilny, ponieważ jest stabilny asymptotycznie. Znaczy to, że wraz z upływem czasu zawsze zbliża się on do punktu równowagi (granica dązy do 0). W praktyce wiemy, że takie wahadło wróci dokładnie do punktu równowagi, a nie zatrzyma się gdzieś obok. Do sprawdzania czy punkt jest stabilny może nam posłużyć kryterium Lyapunova.\\
+~\\
+Jak sprawdzić stabilność układu LTI? Na ćwiczeniach liczyliśmy pierwiastki wielomianu charakterystycznego. Jeżeli ich części rzeczywiste były mniejsze od zera to układ był stabilny. Możemy także to sprawdzić za pomocą Kryterium Routha. 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \end{document}
