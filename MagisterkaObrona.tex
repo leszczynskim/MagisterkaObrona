@@ -1,6 +1,6 @@
 \documentclass[12pt]{article}
 \usepackage[T1]{fontenc}
-\usepackage[polish]{babel}
+%\usepackage[polish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{float}
@@ -154,6 +154,151 @@ t_{i} = \sigma_{ij}n_{i}
 	\includegraphics[scale=0.5]{Pictures/stress.png}
 	\caption{}
 \end{figure}
+
+\section{Grafika Komputerowa II}
+
+
+\subsection{Źródła światła}
+Każde źródla światła posiada parametry: ambient, diffuse i specular
+
+\subsubsection{Światło kierunkowe}
+Światło kierunkowe (Directional light)
+\begin{enumerate}
+\item Reprezentowany tylko poprzez kierunek (vec3 direction)
+\item Znajduje się w nieskończoności (pozycja nie ma znaczenia)
+\item Wszystkie promienie światła mają taki sam kąt padania
+\item Przykład: słońce
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Pictures/directional_light.png}
+	\caption{Światło kierunkowe}
+\end{figure}
+
+\subsubsection{Światło punktowe}
+Światło punktowe (Point light)
+\begin{enumerate}
+\item Reprezentowany tylko poprzez pozycje pozycje (vec3 position)
+\item Promienie światła padają we wszystkich kierunkach
+\item Tłumienie (Attenuation) światła redukuje intensywność swiatła wraz z odległościa promienia światła
+\item Przykład: żarówka
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Pictures/point_light.png}
+	\caption{Światło punktowe}
+\end{figure}
+
+\subsubsection{Reflektor}
+Reflektor (Spotlight)
+\begin{enumerate}
+\item Reprezentowany poprzez pozycje, kierunek i cutoff (vec3 position, vec3 direction, float cutOff)
+\item Promienie padaja w danych kierunku.
+\item cutOff definiuje nam promień reflektora
+\item Przykład: latarka
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Pictures/spotlight_light.png}
+	\caption{Reflektor}
+\end{figure}
+
+
+\subsection{Oświetlenie lokalne}
+Hasła związane z oświetleniem lokalnym:
+
+\begin{enumerate}
+\item Obliczanie intensywności (koloru) światła odbitego od punktu powierzchni
+\item Źródła światła
+\begin{enumerate}
+\item kolor
+\item geometria
+\end{enumerate}
+
+\item Właściwości powierzchni
+\begin{enumerate}
+\item kolor
+\item materiał (metal, dielektryk)
+\item geometra
+\end{enumerate}
+
+\item Obserwator
+\end{enumerate}
+
+Lokalne modele oświetlenia możemy podzielić na 3 typy:
+\begin{enumerate}
+\item Empiryczne
+\item O podłożu fizycznym
+\item Hybrydowe
+\end{enumerate}
+
+\subsubsection{Empiryczne}
+
+Światło otoczenia (Ambient)
+\begin{enumerate}
+\item Oświetlenie tła
+\item Światło oświetlające obiekt nie pochodzi z konkretnego źródła
+\item Intensywność światła jednakowa we wszystkich kierunkach
+\item Każdy element oświetlony w jednakowy sposób
+\item Światło odbite rozchodzi się jednakowo we wszystkich kierunkach
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Pictures/ambient.png}
+	\caption{Światło otoczenia (Ambient)}
+\end{figure}
+
+Światło rozproszone (Diffuse).
+\begin{enumerate}
+\item Model Lamberta (odbicie lambertowskie)
+\item Obiekt posiada matową powierzchnię
+\item Światło odbite rozchodzi się jednakowo we wszystkich kierunkach
+\item Intensywność światła odbitego zależy od kąta padania światła
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Pictures/diffuse.png}
+	\caption{Światło rozproszone (Diffuse)}
+\end{figure}
+
+Odbicie Zwierciadlane (Specular).
+\begin{enumerate}
+\item Obiekt posiada gładką powierzchnię
+\item Prawo Snella: kąt odbicia jest równy kątowi padania
+\item Część energii rozprasza się w innych kierunkach
+\item Intensywność światła odbitego zależy od kąta padania światła i od kąta padania oka (obserwatora)
+\end{enumerate}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Pictures/specular.png}
+	\caption{Odbicie Zwierciadlane (Specular)}
+\end{figure}
+
+Model Phonga polega na połączeniu trzech komponentów: ambient, diffuse i specular.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Pictures/phong.png}
+	\caption{Phong}
+\end{figure}
+
+\subsubsection{O podłożu fizycznym}
+
+\subsubsection{Hybrydowe}
+
+\subsection{Oświetlenie globalne}
+
+\subsection{Porównanie}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Pictures/oswietlenie.png}
+	\caption{}
+\end{figure}
+
 
 \section{Algebra Zewnętrzna}
 
