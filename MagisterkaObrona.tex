@@ -437,19 +437,54 @@ Jeżeli funkcja zmiany stanu jest liniowa i system jest autonomiczny to jest to 
 ~\\
 \subsubsection{Stabilność}
 Na przykładzie wahadła: mamy dwa punkty równowagi - na górze i na dole. Górny nie jest stabilny, bo po wytrąceniu wahadła z tego położenia nigdy do niego nie wrócimy. Punkt na dole jest stabilny, bo wahadło do niego wraca. Stabilność z definicji oznacza, że po wytrąceniu wahadło wróci w otoczenie punktu równowagi. Jednak nasz punkt na dole wahadła jest "bardziej" stabilny, ponieważ jest stabilny asymptotycznie. Znaczy to, że wraz z upływem czasu zawsze zbliża się on do punktu równowagi (granica dązy do 0). W praktyce wiemy, że takie wahadło wróci dokładnie do punktu równowagi, a nie zatrzyma się gdzieś obok. Do sprawdzania czy punkt jest stabilny może nam posłużyć kryterium Lyapunova.\\
-~\\
-Jak sprawdzić stabilność układu LTI? Na ćwiczeniach liczyliśmy pierwiastki wielomianu charakterystycznego. Jeżeli ich części rzeczywiste były mniejsze od zera to układ był stabilny. Możemy także to sprawdzić za pomocą Kryterium Routha. 
+
+ \subsection{Sterowanie}
+ System sterowania jest to system dynamiczny z dodatkowym zbiorem parametrów $u$, za pomocą których możemy zmieniać pole wektorowe (trajektorię) systemu. \\
+ ~\\
+ \textbf{Bang-Bang} - głupie sterowanie, włączamy i wyłączamy na zmianę.\\
+ ~\\
+ \textbf{Open loop control} - system kontroli, w którym $u$ jest obliczane tylko na podstawie modelu systemu. Oznacza to, że kontroler nie obserwuje wyjścia, co w praktyce prowadzi do tego, że system nie poprawia błędów na wyjściu. Nie poprawia też zaburzeń. Jest przydatny gdy dokładnie znamy pole wektorowe i pożądaną trajektorię. Przykładowo się go stosuje w silniku krokowym sterującym ramieniem robota.\\
+ ~\\
+ \textbf{Closed loop control} - jest to open loop control z dodanym regulatorem, czyli do wyznaczenia $u$ bierzemy także wyjście z poprzedniej iteracji i wyjście idealne, do którego dążymy (wcześniej zadane). W ten sposób staramy się kompensować błędy na wyjściu. Przykład: autopilot w samolocie. Mamy zadaną trajektorię, po której chcemy lecieć. Co krok porównujemy wyjście z tą trajektorią i jeżeli są odstępstwa to poprawiamy.\\
+ ~\\
+ Open loop control służy do minimalizacji jakiegoś kryterium (np. odległości trafienia rakiety od samolotu) i do przejścia ze stanu początkowego w dany stan końcowy. Closed loop control pilnuje nam, żeby system nie przestał być stabilny (dzięki poprawianiu błędów).\\
+ ~\\
+ \textbf{Stany równowagi} - przekształcamy układ tak, żeby mieć tylko równania pierwszego rzędu (możemy wstawiać nowe zmienne, np. $v = \dot{x}$). I dla wszystkich $\dot{x} = 0$ mamy stany równowagi.\\
+ ~\\
+ \textbf{Bifurkacja} - zmiana właściwości układu dla pewnych wartości. Przykład dla paraboli: ma dwa miejsca zerowe. Jednak jeśli współczynnik przy $x^{2}$ wynosi 0, to funkcja jest liniowa i ma tylko jeden pierwiatek.\\
  
+ \subsection{Linearyzacja}
+ Linearyzacja umożliwia nam analizę systemu nieliniowego w otoczeniu jakiegoś punktu. Linearyzacja funkcji pierwszego rzędu to szereg Taylora wokół punktu. Gdy linearyzujemy wokół punktu równowagi, macierze są stałe. W innych punktach mogą one zależeć od parametrów.
 
+\subsection{Transformata Laplace'a}
+Transformata Laplace'a pozwala nam przejść z równań różniczkowych określonyw w dziedzinie rzeczywistej, do równań algebraicznych w zespolonych. W ten sposób możemy obliczyć pierwiastki, a następnie za pomocą odwróconej tranformaty wracamy do dziedziny rzeczywistej. Odwrotna transformata jest słaba numerycznie, więc oblicza się ją symbolicznie lub sprawdza wartości w tabelach. Transformatę Laplace'a stosujemy tylko do liniowych równań różniczkowych ze stałymi współczynnikami (czyli LTI w rozumieniu z ćwiczeń). 
 
+\subsection{Stabilność układu LTI}
+Możemy pierwiastki wielomianu charakterystycznego. Jeżeli ich części rzeczywiste są mniejsze od zera to układ jest asymptotycznie stabilny. Możemy także to sprawdzić za pomocą Kryterium Routha lub Kryterium Hurvitza. Kryterium Routha - liczymy wielomian charakterystyczny. Jeżeli wszystkie współczynniki wielomianu są większe od zera i wszystkie elementy z pierwszej kolumny macierzy trójkątnej Routha też są większe od zera to system jest asymptotycznie stabilny. Kryterium Hurvitza: bierzemy wielomian charakterystyczny i jego współczynniki wkładamy do macierzy. Układ jest stabilny, gdy $a_{n} > 0$ i główne minory macierzy są dodatnie.
 
+\subsection{Kontrolowalność}
+System musi być kontrolowalny, żebyśmy mogli zrobić z systemem co chcemy za pomocą wejścia.\\
+System jest kontrolowalny, gdy dowolny stan końcowy jest osiągalny z dowolnego stanu początkowego w skończonym czasie. Kontrolowalność systemu LTI sprawdzamy za pomocą własności: $$Rank[A|B] = n$$ gdzie $$[A|B] = [B, AB, A^{2}B,...,A^{n-1}B]$$
 
+\subsection{Obserwowalność}
+System jest obserwowalny, gdy stan początkowy $x(0)$ może być jednoznacznie wyznaczony na podstawie wiedzy o wejściu $u(t)$ i wyjściu $y(t)$ dla wszystkich $t$ pomiędzy 0 i dowolnym skończonym $T$. Obserwowalność systemu LTI sprawdzamy za pomocą własności: $$Rank[A^{T} | C^{T}] = n$$ gdzie $$[A^{T} | C^{T}] = [C^{T}, A^{T}C^{T},(A^{T})^{2}C^{T},...,(A^{T})^{n-1}C^{T}]$$
+~\\
+Jeżeli system jest kontrolowalny i obserwowalny to \textbf{istnieje kontroler}, który stabilizuje system wzdłuż pożądanej trajektorii.
 
+\subsection{Serwomechanizm}
+Serwomechanizm jest jak closed loop control tylko, że nie tylko stabilizuje system i kompensuje odchylenia, ale także liczy pożądaną kontrolę. Jest szeroko wykorzystywany w praktyce, np. w sterowaniu łodzią.
 
+\subsection{PID}
+Kontroler PID (proportional-integral-derivative) - kontroler zawierający trzy człony poprawiające. 
+\begin{enumerate}
+	\item Proporcjonalny jest po to, żeby dawać wejście proporcjonalne do błędu (w Bang-Bang zawsze dawaliśmy max lub min, co było bezsensu; P nam to poprawia). Czyli kompensuje błąd bieżący.
+	\item Itegral (całkowy) Kompensuje akumulację błędów z przeszłości.
+	\item Derivative (różniczkowy) kompensuje przewidywanie błędy w przyszłości.
+\end{enumerate}
+PID jest najczęściej stosowanym kontrolerem.
 
-
-
-
+\subsection{LQR}
+Linear-Quadratic regulator jest regulatorem optymalnym, czyli lepszym niż PID. Może być stosowany, gdy system dynamiczny jest opisany liniowym równaniem różniczkowym i koszt (który minimalizujemy) jest dany funkcją kwadratową.
 
 
 
