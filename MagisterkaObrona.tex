@@ -486,7 +486,40 @@ PID jest najczęściej stosowanym kontrolerem.
 \subsection{LQR}
 Linear-Quadratic regulator jest regulatorem optymalnym, czyli lepszym niż PID. Może być stosowany, gdy system dynamiczny jest opisany liniowym równaniem różniczkowym i koszt (który minimalizujemy) jest dany funkcją kwadratową.
 
+\section{Programowanie matematyczne}
+\subsection{Programowanie liniowe z ograniczeniami}
+Rozwiązań ZPL należy szukać w wartościach ekstremalnych (wierzchołkach) zbioru ograniczeń.\\
 
+\textbf{Sympleks}:
+\begin{enumerate}
+	\item Wybieramy BRD (bazowe rozwiązanie dopuszczalne): dopełniamy ograniczenia do postaci standardowej, żeby były równości. Zmienne dopełniające tworzą BRD. Jeżeli rozwiązanie mamy dane z równościami to możemy albo wybrać macierz jednostkową albo musimy dodać zmienne sztuczne. Jeżeli dodaliśmy zmienne sztuczne to musimy rozwiązać zadanie metodą dwufazową lub metodą kar ("dużego M"). W metodzie "dużego M" robimy sympleks raz, ale mamy inne drzewo interpretacji.
+	\item \label{petla} Obliczamy wskaźniki optymalności ($z_{j} - c_{j}$).
+	\item Jeżeli $z_{j} - c_{j} \geq 0 \forall j = 1,2,...,n$ to aktualne BRD jest optymalne --- STOP.
+	\item Badamy współczynniki $a_{ij}$. Jeżeli $ \exists j z_{j} - c_{j} < 0$, przy którym $a_{ij} \leq 0$ dla $i \in B$, to zadanie nie posiada skończonego rozwiązania optymalniego --- STOP
+	\item Szukamy niebazowej zmiennej, która wejdzie do bazy nowego BRD za pomocą kryterium wejścia  $z_{k} - c_{k} = min\{ z_{j} - c_{j}\}$.
+	\item Stosując kryterium wyjścia $\frac{b_{r}}{a_{rk}} = min{\frac{b_{i}}{a_{ik}}}$, znaleźć indeks zmiennej usuwanej z aktualnego BRD.
+	\item Uaktualniamy tabelkę (liczymy nowe BRD dla sąsiedniej bazy i obliczamy nowe $a_{ij}$).
+	\item Wracamy do \ref{petla}.
+\end{enumerate}
 
+~\\
+\textbf{Reguła Blanda} chroni przed zapętlaniem się sympleksu (może się zapętlić gdy mamy zdegenerowane BRD -- co najmniej jedna ze składowych części bazowej jest równa zeru). Od zwykłego sympleksu różni się innym kryterium wejścia i wyjścia (po prostu bierzemy najmniejszy indeks).\\
+~\\
+Zalety i wady sympleksu:
+\begin{enumerate}
+	\item Ogólnie znany i często stosowany do rozwiązywania ZPL w praktyce.
+	\item Złożoność pesymistyczna: wykładnicza.
+	\item Złożoność średnia: liniowa O((m+n)/2).
+\end{enumerate}
+~\\
+\textbf{Zadanie dualne}: jeśli ZPL posiada dużą liczbę ograniczeń, a niewielką liczbę zmiennych ($m>n$), to warto zamiast niego rozważać zadanie dualne o niewielkiej liczbie ograniczeń i zwiększonej liczbie zmiennych decyzyjnych. Aby przejść do zadania dualnego zamieniamy: max na min, zmienne na ograniczenia i ograniczenia na zmienne.\\
+~\\
+\textbf{Warunek komplementarności}
+Niech $\bar{x} = (x, x^{d})$ oraz $\bar{y} = (y, y^{d})$ -- BRD odpowiednio dla ZP i ZD. Rozwiązania te są optymalne, gdy $x^{T}y^{d} + y^{T}x^{d} = 0$. Za pomocą warunku komplementarności możemy sprawdzić czy rozwiązanie jest optymalne (układ równań i rozkminy).
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{Pictures/sympleks_metodaPunWew}
+	\caption{Porównanie algorytmu sympleksu z metodą punktu wewnętrznego}
+\end{figure}
 
 \end{document}
