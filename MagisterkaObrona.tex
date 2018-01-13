@@ -508,7 +508,7 @@ Rozwiązań ZPL należy szukać w wartościach ekstremalnych (wierzchołkach) zb
 Zalety i wady sympleksu:
 \begin{enumerate}
 	\item Ogólnie znany i często stosowany do rozwiązywania ZPL w praktyce.
-	\item Złożoność pesymistyczna: wykładnicza.
+	\item Złożoność pesymistyczna: wykładnicza (metoda punktu wewnętrznego wielomianowa).
 	\item Złożoność średnia: liniowa O((m+n)/2).
 \end{enumerate}
 ~\\
@@ -521,5 +521,107 @@ Niech $\bar{x} = (x, x^{d})$ oraz $\bar{y} = (y, y^{d})$ -- BRD odpowiednio dla 
 	\includegraphics[scale=0.7]{Pictures/sympleks_metodaPunWew}
 	\caption{Porównanie algorytmu sympleksu z metodą punktu wewnętrznego}
 \end{figure}
+
+\textbf{Mnożniki Lagrange'a}\\
+Za pomocą Mnożników Lagrange'a sprawdzamy czy dane rozwiązanie jest RO (rozwiązaniem optymalnym). Funkcja musi być wypukła. Dla danego rozwiązania $x$ i dla zadanych ograniczeń sprawdzamy, czy są one aktywne. Są aktywne, gdy po wstawieniu do nich $x$ zachodzi równość. Korzystając ze wzoru obliczamy $\lambda$ i jeżeli dla każdego ograniczenia aktywnego $ \lambda \geq 0$ to $x$ jest RO.
+
+\subsection{Optymalizacja nieliniowa bez ograniczeń}
+Ekstremum funkcji mamy, gdy gradient jest równy 0. Jeżeli funkcja jest $C^{2}$ to możemy obliczyć jej Hessian (macierz drugich pochodnych) i sprawdzić jego określoność. W ten sposób sprawdzamy czy ekstremum jest minimum czy maksimum. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{Pictures/warunki_stopu}
+	\caption{Typowe warunki stopu}
+\end{figure}
+
+\textbf{Algorytmy optymalizacji nieliniowej bez ograniczeń}\\
+Każdy algorytm składa się z dwóch etapów. W pierwszym znajdujemy kierunek poszukiwań $d_{k}$, a w drugim długość kierunku $\alpha _{k}$.\\
+
+Metody minimalizacji jednokierunkowej (szukania $\alpha$):
+\begin{enumerate}
+	\item Analityczna -- obliczenia symboliczne, dobre dla funkcji "prostej" postaci.
+	\item Eliminacji przedziałów (funkcja musi być unimodalna):
+	\begin{enumerate}
+		\item Metoda dychotomii (dwudzielności) -- jak wyszukiwanie binarne tylko lekko zmodyfikowane. W każdej iteracji obliczamy dwie wartości funkcji i usuwamy połowę przedziału.
+		\item Metoda złotego podziału -- wybieramy dwa punkty próbne w przedziale. W każdej iteracji obliczamy tylko jedną wartość funkcji i zmniejszamy przedział o współczynnik $c$.
+		\item Metoda Fibonacciego
+		\item Metoda punktu środkowego
+	\end{enumerate}
+	\item Interpolacja funkcji celu:
+	\begin{enumerate}
+		\item Metoda Newtona
+		\item Interpolacja paraboliczna
+	\end{enumerate}
+	\item Metody przybliżone:
+	\begin{enumerate}
+		\item Testy Goldsteina
+		\item Algorytm Armijo
+	\end{enumerate}
+\end{enumerate}
+
+\textbf{Metody optymalizacji nieliniowej bez ograniczeń}:
+\begin{enumerate}
+	\item Bezgradientowa: Gaussa-Seidela: $d_{i} = e_{i}$. W każdej iteracji idziemy w $n$ kierunkach bazowych i sprawdzamy czy jesteśmy w optimum. Uwagi: prosta obliczeniowo, wolno zbieżna, może zygzakować. Jest to gorsza wersja gradientów sprzężonych.
+	\item Gradientowe:
+	\begin{enumerate}
+		\item Metoda gradientu prostego: $d_{k} = -\nabla f(x_{k})$, $\alpha _{k} = const$.
+		\item Metoda najszybszego spadku: $d_{k} = -\nabla f(x_{k})$, $\alpha _{k}$ -- na podstawie dokładnej lub przybliżonej minimalizacji kierunkowej. Uwagi: zbieżność liniowa, relatywnie najszybsze zbliżanie się do RO (podczas początkowych kroków), wolna zbieżność (zygzakowanie, czyli każdy kolejny kierunek jest do siebie prostopadły -- wynika to z tego, że $\alpha$ jest minimalna), wrażliwa na błędy zaokrągleń.
+		\item Metoda gradientu sprzężonego: aby nie wybierać tego samego kierunku dwa razy (czyli usunąć zygzakowanie), szukamy zbioru kierunków A-sprzężonych, czyli zmieniamy układ współrzędnych. Dzięki temu dojdziemy do rozwiązania w maksymalnie $n$ krokach (każdy z kierunków jest wykorzystywany tylko raz) dla funkcji kwadratowej. Dzięki tej metodzie możemy też rozwiązać układ równań liniowych $Ax = b$, gdzie $A$ jest symetryczna i dodatnio określona.
+	\end{enumerate}
+	\item Gradientowe drugiego rzędu:
+	\begin{enumerate}
+		\item Metoda Newtona: funkcja $C^{2}$. Przybliżamy funkcję $F$ parabolą w punkcie (gdzie $F(\delta) = f(x_{x} + \delta)$, $\delta$ - krok i liczymy jej ekstremum. Jest zbieżny kwadratowo (czyli szybki), ale większy nakład obliczeniowy w każdym kroku. W każdej iteracji obliczenie kierunku uwzględnia odwrócenie Hesjana.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.7]{Pictures/metoda_newtona}
+			\caption{Metoda Newtona}
+		\end{figure}
+		\item Metoda Newtona-Raphsona -- jak Metoda Newtona, tylko minimalizujemy jeszcze $\alpha$. Dzięki temu mamy większe obszary zbieżności.
+		\item Metoda quasi-Newtonowskie -- liczymy odwrotność Hesjana tylko raz, potem co pętle go poprawiamy. Metody poprawiania: DFP, BGFS. 
+	\end{enumerate}
+\end{enumerate}
+~\\
+\textbf{Metoda pełzającego sympleksu} to metoda bezpośrednia heurystyczna.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{Pictures/pelzajacy_sympleks}
+	\caption{Pełzający sympleks}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{Pictures/pelzajacy_sympleks2}
+	\caption{Pełzający sympleks - przykład}
+\end{figure}
+
+\subsection{Optymalizacja nieliniowa z ograniczeniami}
+Obszar poszukiwań minimum jest teraz ograniczony ograniczeniami nieloniowymi. Kierunek dopuszczalny musi być wewnątrz lub na ściance zbioru ograniczającego.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{Pictures/ograniczenia_nieliniowe}
+	\caption{Optymalizacja z ograniczeniami}
+\end{figure}
+
+\textbf{Warunki Kuhna-Tuckera}\\
+Jeżeli ZPN jest regularne to WKT są konieczne, żeby punkt był ekstremum (był rozwiązaniem). Jeżeli zadanie jest wypukłe (funkcja celu jest wypukła, zadanie nie posiada nieliniowych ograniczeń równościowych, a ograniczenia nierównościowe są wypukłe) to WKT jest warunkiem koniecznym i wystarczającym. 
+
+\textbf{Funkcja Lagarange'a} $$L(x,\lambda) = f(x) + \lambda^{T}(Ax-b)$$ Jest wykorzystywana do sprawdzenia czy dany punkt jest RO zadania otymalizacji nieliniowej z ograniczeniami. Sprawdzamy to za pomocą WKT.\\
+~\\
+Algorytmy programowania kwadratowego:
+\begin{enumerate}
+	\item metoda eliminacji uogólnionej,
+	\item metoda zbioru ograniczeń aktywnych,
+	\item metoda rzutowania gradientu.
+\end{enumerate}
+
+\subsection{Metody funkcji kary}
+Gdy mamy zadanie optymalizacji nieliniowej z ograniczeniami, to możemy je przekształci na zadanie optymalizacji bez ograniczeń stosując funkcję kary.
+$$min F_{k}(x,r_{k})$$ gdzie $$F_{k}(x,r_{k}) = f(x) + P_{k}(x,r_{k})$$ Mamy różne metody wyznaczania funkcji kary: wewnętrzną, zewnętrzną, odmiany. Funkcja kary karze za używanie rozwiązań niedopuszczalnych. Podstawowym problemem związanym z funkcją kary jest kwestia jak bardzo karać – zbyt niska kara może doprowadzić do dominacji rozwiązań niedopuszczalnych, zbyt wysoka jej wartość odrzuci większość (jeśli nie wszystkie) rozwiązań niedopuszczalnych a wśród nich także te które mogły być bardzo cenne.
+
+
+
+
+
+ 
+
 
 \end{document}
