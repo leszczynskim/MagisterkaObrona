@@ -566,7 +566,7 @@ Metody minimalizacji jednokierunkowej (szukania $\alpha$):
 	\begin{enumerate}
 		\item Metoda gradientu prostego: $d_{k} = -\nabla f(x_{k})$, $\alpha _{k} = const$.
 		\item Metoda najszybszego spadku: $d_{k} = -\nabla f(x_{k})$, $\alpha _{k}$ -- na podstawie dokładnej lub przybliżonej minimalizacji kierunkowej. Uwagi: zbieżność liniowa, relatywnie najszybsze zbliżanie się do RO (podczas początkowych kroków), wolna zbieżność (zygzakowanie, czyli każdy kolejny kierunek jest do siebie prostopadły -- wynika to z tego, że $\alpha$ jest minimalna), wrażliwa na błędy zaokrągleń.
-		\item Metoda gradientu sprzężonego: aby nie wybierać tego samego kierunku dwa razy (czyli usunąć zygzakowanie), szukamy zbioru kierunków A-sprzężonych, czyli zmieniamy układ współrzędnych. Dzięki temu dojdziemy do rozwiązania w maksymalnie $n$ krokach (każdy z kierunków jest wykorzystywany tylko raz) dla funkcji kwadratowej. Dzięki tej metodzie możemy też rozwiązać układ równań liniowych $Ax = b$, gdzie $A$ jest symetryczna i dodatnio określona.
+		\item \label{gradientsprzezony} Metoda gradientu sprzężonego: aby nie wybierać tego samego kierunku dwa razy (czyli usunąć zygzakowanie), szukamy zbioru kierunków A-sprzężonych, czyli zmieniamy układ współrzędnych. Dzięki temu dojdziemy do rozwiązania w maksymalnie $n$ krokach (każdy z kierunków jest wykorzystywany tylko raz) dla funkcji kwadratowej. Dzięki tej metodzie możemy też rozwiązać układ równań liniowych $Ax = b$, gdzie $A$ jest symetryczna i dodatnio określona.
 	\end{enumerate}
 	\item Gradientowe drugiego rzędu:
 	\begin{enumerate}
@@ -617,11 +617,91 @@ Algorytmy programowania kwadratowego:
 Gdy mamy zadanie optymalizacji nieliniowej z ograniczeniami, to możemy je przekształci na zadanie optymalizacji bez ograniczeń stosując funkcję kary.
 $$min F_{k}(x,r_{k})$$ gdzie $$F_{k}(x,r_{k}) = f(x) + P_{k}(x,r_{k})$$ Mamy różne metody wyznaczania funkcji kary: wewnętrzną, zewnętrzną, odmiany. Funkcja kary karze za używanie rozwiązań niedopuszczalnych. Podstawowym problemem związanym z funkcją kary jest kwestia jak bardzo karać – zbyt niska kara może doprowadzić do dominacji rozwiązań niedopuszczalnych, zbyt wysoka jej wartość odrzuci większość (jeśli nie wszystkie) rozwiązań niedopuszczalnych a wśród nich także te które mogły być bardzo cenne.
 
+\section{Metody numeryczne}
 
+\subsection{Poszukiwanie zer funkcji jednej zmiennej}
 
+\textbf{Metoda bisekcji}\\
+Założenia: funkcja jest ciągła na przedziale $[a,b]$ i ma różne znaki na końcach przedziału.\\
+Przedział $[a,b]$ dzielimy na połowę w punkcie $x_{0}$. Jeżeli $x_{0}$ nie jest pierwiastkiem to wybieramy jeden z przedziałów $[a,x_{0}]$ lub $[x_{0},b]$. Wybieramy ten, na którym funkcja ma różne znaki na końcach. Zbieżność 1.\\
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{Pictures/metoda_bisekcji}
+	\caption{Metoda bisekcji}
+\end{figure}
 
+\textbf{Metoda stycznych Newtona}\\
+Zbieżność kwadratowa.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{Pictures/metoda_stycznych_newtona}
+	\caption{Metoda Newtona}
+\end{figure}
 
- 
+\textbf{Metoda stycznych siecznych}\\
+Zbieżność 1.61.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{Pictures/metoda_siecznych}
+	\caption{Metoda siecznych}
+\end{figure}
+~\\
+Często w \textbf{profesjonalnych solverach} używa się najpierw metody bisekcji, a potem metodę Newtona.
 
+\subsection{Metody całkowania}
+Całkujemy za pomocą różnych metod Newtona-Cotesa: metody prostokątów, metody trapezów, metody Simpsona (praboli). Metoda Simpsona interpoluje funkcję parabolą na trzech punktach za pomocą wielomianu Lagrange'a. Istnieje też metoda Monte-Carlo -- funkcję zamykamy w kwadrat i strzelamy. Obliczamy stosunek liczny trafionych do liczby strzałów i na tej podstawie szacujemy wartość.
+
+\subsection{Metody rozwiązywania układów równań liniowych skończonych}
+\textbf{Wzory Cramera}\\
+$$x_{i} = \frac{W_{i}}{W}$$ gdzie:\\
+$W$ -- wyznacznik główny\\
+$W_{i}$ - wyznaczniki, w których współczynniki przy $x_{i}$ zastępujemy wyrazami wolnymi.
+
+\textbf{Metoda eliminacji Gaussa}\\
+Metoda eliminacji Gaussa dzieli się na dwa etapy:
+\begin{enumerate}
+	\item Sprowadzenie macierzy do postaci trójkątnej.
+	\item Rozwiązanie takiego układu.
+\end{enumerate}
+Aby sprowadzić macierz do postaci trójkątnej możemy wykorzystać jedną z dwóch metod wyboru elementu głównego:
+\begin{enumerate}
+	\item Wybór częściowy: w k-tym kroku największy element z k-tej kolumny z wierszy $k-n$ i zamieniamy wiersze (ewntualnie działamy na wierszach i zamieniamy kolumny).
+	\item Wybór pełny: maksymalnego elementu szukamy w podmacierzy i zamieniamy odpowiedni wiersz i kolumnę.
+\end{enumerate}
+
+\textbf{Rozkład LU}
+$$PA = LU$$
+Rozkład LU możemy uzyskać za pomocą eliminacji Gaussa, ale bez "doklejania" do $A$ wektora $b$. Wtedy z eliminacji otrzymujemy macierz schodkową, czylu $U$, a $L$ to złożenie operacji elementarnych na $A$, które doprowadziłY do $U$.\\
+Inną metodą rozkładu LU jest metoda Doolittle'a.
+~\\
+\textbf{Rozkład Cholesky'ego-Banachawiecza}\\
+Jeżeli A jest macierzą symetryczną i dodatnio określoną to istnieje macierz trójkątna dolna L z dodatnimi elementami na głównej przekątnej:
+$$A = LL^{T}$$
+Jeżeli rozkład nie istnieje, to $A$ nie może być macierzą symetryczną dodatnio określoną.\\
+Zastosowania rozkładu LU: obliczanie wyznacznika, rozwiązywanie układu równań $Ax = b$, obliczanie $A^{-1}$.
+
+\subsection{Metody rozwiązywania układów równań liniowych iteracyjne}
+Niech $x_{0}$ będzie wektorem nazywanym przybliżeniem początkowym. We wszystkich metodach iteracyjnych tworzony jest ciąg kolejnych przybliżen, który dąży do rozwiązania $x$.\\
+~\\
+\textbf{Metoda Jacobiego}\\
+Niech $a_{ii} \neq 0$ dla $i = 1,...,n$. Przedstawiamy macierz A jako $A = U + L + D$. Liczymy $x_{k}$. Jeżeli A jest silnie diagonalnie dominująca to metoda jest zbieżna.
+~\\
+\textbf{Metoda Gaussa-Seidela}\\
+Tak jak Jacobi, tylko mamy inny wzór na $x_{k}$. Metoda jest zbieżna w dwóch przypadkach:
+\begin{enumerate}
+	\item jeżeli A jest silnie diagonalnie dominująca
+	\item $A = A^{T}$ i $A$ jest dodatnio określona.
+\end{enumerate}
+~\\
+\textbf{Metoda SOR}\\
+Metoda SOR jest uogólnieniem metody Gaussa-Seidela, w której wprowadzamy dodatkowy parametr relaksacji $\omega$, z pomocą którego mieszamy wartość poprzedniego kroku z wartością nową ($(1-\omega)x_{i} + \omega x_{i+1}$).
+~\\
+\textbf{Metoda gradientu sprzężonego}
+
+\subsection{Metody rozwiązywania układów równań nieliniowych iteracyjne}
+Rozwiązywanie układów równań sprowadza się do znalezienia takiego rozwiązania $\alpha \in R^{n}$, w którym odwzorowanie $F: R^{n} \rightarrow R^{n}$ przyjmuje wartość zero, tzn. $F(\alpha) = 0$.\\
+~\\
+\textbf{Metoda Newtona}\\
+Dla układów równań nieliniowych metoda Newtona działa jako uogólnienie dobrze nam znanej metody stycznych Newtona. 
 
 \end{document}
