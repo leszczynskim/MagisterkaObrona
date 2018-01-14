@@ -157,7 +157,6 @@ t_{i} = \sigma_{ij}n_{i}
 
 \section{Grafika Komputerowa II}
 
-
 \subsection{Źródła światła}
 Każde źródla światła posiada parametry: ambient, diffuse i specular
 
@@ -237,7 +236,7 @@ Lokalne modele oświetlenia możemy podzielić na 3 typy:
 
 \subsubsection{Empiryczne}
 
-Światło otoczenia (Ambient)
+\textbf{Światło otoczenia} (Ambient)
 \begin{enumerate}
 \item Oświetlenie tła
 \item Światło oświetlające obiekt nie pochodzi z konkretnego źródła
@@ -252,7 +251,7 @@ Lokalne modele oświetlenia możemy podzielić na 3 typy:
 	\caption{Światło otoczenia (Ambient)}
 \end{figure}
 
-Światło rozproszone (Diffuse).
+\textbf{Światło rozproszone} (Diffuse).
 \begin{enumerate}
 \item Model Lamberta (odbicie lambertowskie)
 \item Obiekt posiada matową powierzchnię
@@ -266,7 +265,7 @@ Lokalne modele oświetlenia możemy podzielić na 3 typy:
 	\caption{Światło rozproszone (Diffuse)}
 \end{figure}
 
-Odbicie Zwierciadlane (Specular).
+\textbf{Odbicie Zwierciadlane} (Specular).
 \begin{enumerate}
 \item Obiekt posiada gładką powierzchnię
 \item Prawo Snella: kąt odbicia jest równy kątowi padania
@@ -285,8 +284,17 @@ Model Phonga polega na połączeniu trzech komponentów: ambient, diffuse i spec
 	\includegraphics[scale=0.5]{Pictures/phong.png}
 	\caption{Phong}
 \end{figure}
+~\\
+\textbf{Oświetlenie anizotropowe} -- oświetlenie obiektu jest zależne od właściwości fizycznych jego materiału. Czyli w zależności jak na niego patrzymy, oświetlenie się różni. Przykład: chropowaty metal (jak czajnik), włosy. 
 
 \subsubsection{O podłożu fizycznym}
+W modelach o podłożu fizycznym podstawową modyfikacją w stosunku do modeli empirycznych jest to, że powierzchnie traktujemy jako mikrolustra. Ponadto wprowadzamy funkcję BRDF, która zapewnia nam, że energia światła nie wzrośnie po odbiciu. Określa ona prawdopodobieństwo, że nadchodzący foton zostanie odbity w danym kierunku. Rozkład mikroluster może być uzyskany różnymi metodami jak np. rozkład Gaussa. Współczynnik Fresnela -- ilość światła odbitego do padającego.\\
+Przykładowe modele fizyczne (różnią się rozkładem mikroluster):
+\begin{itemize}
+	\item Torrence'a-Sparrowa
+	\item Cooka-Torrence'a
+\end{itemize}
+
 
 \subsubsection{Hybrydowe}
 
@@ -298,6 +306,12 @@ Model Phonga polega na połączeniu trzech komponentów: ambient, diffuse i spec
 	\includegraphics[scale=0.5]{Pictures/oswietlenie.png}
 	\caption{}
 \end{figure}
+
+\subsubsection{Radiosity}
+Dyskretyzujemy elementy sceny na płaty. Radiosity wyznacza globalny rozkład natężenia światła uwzględniając pochłonięcia i odbicia światła jakie mają miejsce na wszystkich powierzchniach znajdujących się na scenie. Czyli modeluje prawie dokładnie to samo, co obserwuje się w rzeczywistym świecie, gdzie każda powierzchnia pochłania światło, ale także część odbija. Radiosity uwzględnia wyłącznie odbicia rozproszone, tj. intensywność światła odbitego jest niezależna od kierunku - dzięki temu uzyskane wyniki są niezależne od położenia obserwatora, co pozwala na wielokrotną, dowolną wizualizację sceny bez ponawiania obliczeń.
+
+Metoda nie uwzględnia jednak efektów świetlnych zależnych od położenia obserwatora takich jak rozbłyski na powierzchniach metalicznych, odbicia zwierciadlane, załamanie światła itp.
+
 
 
 \section{Algebra Zewnętrzna}
@@ -492,7 +506,7 @@ Rozwiązań ZPL należy szukać w wartościach ekstremalnych (wierzchołkach) zb
 
 \textbf{Sympleks}:
 \begin{enumerate}
-	\item Wybieramy BRD (bazowe rozwiązanie dopuszczalne): dopełniamy ograniczenia do postaci standardowej, żeby były równości. Zmienne dopełniające tworzą BRD. Jeżeli rozwiązanie mamy dane z równościami to możemy albo wybrać macierz jednostkową albo musimy dodać zmienne sztuczne. Jeżeli dodaliśmy zmienne sztuczne to musimy rozwiązać zadanie metodą dwufazową lub metodą kar ("dużego M"). W metodzie "dużego M" robimy sympleks raz, ale mamy inne drzewo interpretacji.
+	\item Wybieramy BRD (bazowe rozwiązanie dopuszczalne): dopełniamy ograniczenia do postaci standardowej, żeby były równości. Zmienne dopełniające tworzą BRD. Jeżeli rozwiązanie mamy dane z równościami to możemy albo wybrać macierz jednostkową, albo musimy dodać zmienne sztuczne. Jeżeli dodaliśmy zmienne sztuczne to musimy rozwiązać zadanie metodą dwufazową lub metodą kar ("dużego M"). W metodzie''dużego M'' robimy sympleks raz, ale mamy inne drzewo interpretacji.
 	\item \label{petla} Obliczamy wskaźniki optymalności ($z_{j} - c_{j}$).
 	\item Jeżeli $z_{j} - c_{j} \geq 0 \forall j = 1,2,...,n$ to aktualne BRD jest optymalne --- STOP.
 	\item Badamy współczynniki $a_{ij}$. Jeżeli $ \exists j z_{j} - c_{j} < 0$, przy którym $a_{ij} \leq 0$ dla $i \in B$, to zadanie nie posiada skończonego rozwiązania optymalniego --- STOP
@@ -512,16 +526,17 @@ Zalety i wady sympleksu:
 	\item Złożoność średnia: liniowa O((m+n)/2).
 \end{enumerate}
 ~\\
-\textbf{Zadanie dualne}: jeśli ZPL posiada dużą liczbę ograniczeń, a niewielką liczbę zmiennych ($m>n$), to warto zamiast niego rozważać zadanie dualne o niewielkiej liczbie ograniczeń i zwiększonej liczbie zmiennych decyzyjnych. Aby przejść do zadania dualnego zamieniamy: max na min, zmienne na ograniczenia i ograniczenia na zmienne.\\
+\textbf{Zadanie dualne}\\ 
+Jeśli ZPL posiada dużą liczbę ograniczeń, a niewielką liczbę zmiennych ($m>n$), to warto zamiast niego rozważać zadanie dualne o niewielkiej liczbie ograniczeń i zwiększonej liczbie zmiennych decyzyjnych. Aby przejść do zadania dualnego zamieniamy: max na min, zmienne na ograniczenia i ograniczenia na zmienne.\\
 ~\\
-\textbf{Warunek komplementarności}
+\textbf{Warunek komplementarności}\\
 Niech $\bar{x} = (x, x^{d})$ oraz $\bar{y} = (y, y^{d})$ -- BRD odpowiednio dla ZP i ZD. Rozwiązania te są optymalne, gdy $x^{T}y^{d} + y^{T}x^{d} = 0$. Za pomocą warunku komplementarności możemy sprawdzić czy rozwiązanie jest optymalne (układ równań i rozkminy).
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.7]{Pictures/sympleks_metodaPunWew}
 	\caption{Porównanie algorytmu sympleksu z metodą punktu wewnętrznego}
 \end{figure}
-
+~\\
 \textbf{Mnożniki Lagrange'a}\\
 Za pomocą Mnożników Lagrange'a sprawdzamy czy dane rozwiązanie jest RO (rozwiązaniem optymalnym). Funkcja musi być wypukła. Dla danego rozwiązania $x$ i dla zadanych ograniczeń sprawdzamy, czy są one aktywne. Są aktywne, gdy po wstawieniu do nich $x$ zachodzi równość. Korzystając ze wzoru obliczamy $\lambda$ i jeżeli dla każdego ograniczenia aktywnego $ \lambda \geq 0$ to $x$ jest RO.
 
@@ -533,13 +548,13 @@ Ekstremum funkcji mamy, gdy gradient jest równy 0. Jeżeli funkcja jest $C^{2}$
 	\includegraphics[scale=0.7]{Pictures/warunki_stopu}
 	\caption{Typowe warunki stopu}
 \end{figure}
-
+~\\
 \textbf{Algorytmy optymalizacji nieliniowej bez ograniczeń}\\
 Każdy algorytm składa się z dwóch etapów. W pierwszym znajdujemy kierunek poszukiwań $d_{k}$, a w drugim długość kierunku $\alpha _{k}$.\\
 
 Metody minimalizacji jednokierunkowej (szukania $\alpha$):
 \begin{enumerate}
-	\item Analityczna -- obliczenia symboliczne, dobre dla funkcji "prostej" postaci.
+	\item Analityczna -- obliczenia symboliczne, dobre dla funkcji ,,prostej'' postaci.
 	\item Eliminacji przedziałów (funkcja musi być unimodalna):
 	\begin{enumerate}
 		\item Metoda dychotomii (dwudzielności) -- jak wyszukiwanie binarne tylko lekko zmodyfikowane. W każdej iteracji obliczamy dwie wartości funkcji i usuwamy połowę przedziału.
@@ -638,7 +653,7 @@ Zbieżność kwadratowa.
 	\caption{Metoda Newtona}
 \end{figure}
 
-\textbf{Metoda stycznych siecznych}\\
+\textbf{Metoda siecznych}\\
 Zbieżność 1.61.
 \begin{figure}[H]
 	\centering
@@ -655,8 +670,8 @@ Całkujemy za pomocą różnych metod Newtona-Cotesa: metody prostokątów, meto
 \textbf{Wzory Cramera}\\
 $$x_{i} = \frac{W_{i}}{W}$$ gdzie:\\
 $W$ -- wyznacznik główny\\
-$W_{i}$ - wyznaczniki, w których współczynniki przy $x_{i}$ zastępujemy wyrazami wolnymi.
-
+$W_{i}$ - wyznaczniki, w których współczynniki przy $x_{i}$ zastępujemy wyrazami wolnymi.\\
+~\\
 \textbf{Metoda eliminacji Gaussa}\\
 Metoda eliminacji Gaussa dzieli się na dwa etapy:
 \begin{enumerate}
@@ -668,11 +683,12 @@ Aby sprowadzić macierz do postaci trójkątnej możemy wykorzystać jedną z dw
 	\item Wybór częściowy: w k-tym kroku największy element z k-tej kolumny z wierszy $k-n$ i zamieniamy wiersze (ewntualnie działamy na wierszach i zamieniamy kolumny).
 	\item Wybór pełny: maksymalnego elementu szukamy w podmacierzy i zamieniamy odpowiedni wiersz i kolumnę.
 \end{enumerate}
-
+Te metody trzeba stosować, żeby uniknąć sytuacji, gdzie w czasie działania algorytmu mamy zero na przekątnej.\\
+~\\
 \textbf{Rozkład LU}
 $$PA = LU$$
 Rozkład LU możemy uzyskać za pomocą eliminacji Gaussa, ale bez "doklejania" do $A$ wektora $b$. Wtedy z eliminacji otrzymujemy macierz schodkową, czylu $U$, a $L$ to złożenie operacji elementarnych na $A$, które doprowadziłY do $U$.\\
-Inną metodą rozkładu LU jest metoda Doolittle'a.
+Inną metodą rozkładu LU jest metoda Doolittle'a.\\
 ~\\
 \textbf{Rozkład Cholesky'ego-Banachawiecza}\\
 Jeżeli A jest macierzą symetryczną i dodatnio określoną to istnieje macierz trójkątna dolna L z dodatnimi elementami na głównej przekątnej:
@@ -684,7 +700,7 @@ Zastosowania rozkładu LU: obliczanie wyznacznika, rozwiązywanie układu równa
 Niech $x_{0}$ będzie wektorem nazywanym przybliżeniem początkowym. We wszystkich metodach iteracyjnych tworzony jest ciąg kolejnych przybliżen, który dąży do rozwiązania $x$.\\
 ~\\
 \textbf{Metoda Jacobiego}\\
-Niech $a_{ii} \neq 0$ dla $i = 1,...,n$. Przedstawiamy macierz A jako $A = U + L + D$. Liczymy $x_{k}$. Jeżeli A jest silnie diagonalnie dominująca to metoda jest zbieżna.
+Niech $a_{ii} \neq 0$ dla $i = 1,...,n$. Przedstawiamy macierz A jako $A = U + L + D$. Liczymy $x_{k}$. Jeżeli A jest silnie diagonalnie dominująca to metoda jest zbieżna.\\
 ~\\
 \textbf{Metoda Gaussa-Seidela}\\
 Tak jak Jacobi, tylko mamy inny wzór na $x_{k}$. Metoda jest zbieżna w dwóch przypadkach:
@@ -694,7 +710,7 @@ Tak jak Jacobi, tylko mamy inny wzór na $x_{k}$. Metoda jest zbieżna w dwóch 
 \end{enumerate}
 ~\\
 \textbf{Metoda SOR}\\
-Metoda SOR jest uogólnieniem metody Gaussa-Seidela, w której wprowadzamy dodatkowy parametr relaksacji $\omega$, z pomocą którego mieszamy wartość poprzedniego kroku z wartością nową ($(1-\omega)x_{i} + \omega x_{i+1}$).
+Metoda SOR jest uogólnieniem metody Gaussa-Seidela, w której wprowadzamy dodatkowy parametr relaksacji $\omega$, z pomocą którego mieszamy wartość poprzedniego kroku z wartością nową ($(1-\omega)x_{i} + \omega x_{i+1}$).\\
 ~\\
 \textbf{Metoda gradientu sprzężonego}
 
@@ -703,5 +719,18 @@ Rozwiązywanie układów równań sprowadza się do znalezienia takiego rozwiąz
 ~\\
 \textbf{Metoda Newtona}\\
 Dla układów równań nieliniowych metoda Newtona działa jako uogólnienie dobrze nam znanej metody stycznych Newtona. 
+
+\subsection{Wektory i własności własne}
+\textbf{Metoda potęgowa} znajduje największą co do modułu wartość własną i odpowiadający jej wektor. Nazywa się potęgowa, ponieważ jeżeli chcemy uzyskać k-te przybliżenie musimy obliczyć $A^{k}$. Jest stosowana w Google Page Rank.
+$$Ax_{0} = y_{0}$$ $$x_{1} = \frac{y_{0}}{||y_{0}||}$$ Przekształcamy wektor dotąd aż nie będzie się zmieniać, więc będzie wektorem własnym. Zbieżność jest liniowa.\\
+~\\
+\textbf{Metoda QR}\\
+Ideą metody QR jest doprowadzenie macierzy A do postaci $A = Q^{T}AQ$ za pomocą rozkładu QR. W każdym kroku macierz A rozkładamy na ortogonalną macierz Q i trójkątną macierz R. A więc ostatecznie $$A_{k+1} = R_{k}Q_{k} = Q^{-1}_{k}Q_{k}R_{k}Q_{k} = Q^{-1}_{k}A_{k}Q_{k} = Q^{T}_{k}A_{k}Q_{k}$$ Macierz diagonalna $A_{k}$ ma wartości własne na diagonali. Natomiast złożenie wszystkich macierzy $Q_{i}$ ma wartości własne w kolumnach.
+
+\subsection{Metody rozwiązywania układ różniczkowych}
+Mamy dwa główne typy solverów: explicit i implicite. Żeby obliczyć kolejny stan metody explicite biorą pod uwagę jedynie stan obecny, a metody implicite stan obecny i stan przyszły. Mamy dwa główne solvery: Eulera i Rungego-Kutty. Metody Eulera (explicit i implicite) liczą rowzwiązanie w dyskretnych punktach. RK oblicza kilka kroków pomocniczych pomiędzy dwoma dyskretnymi wartościami. Ostatecznie wylicza wartość średniej ważonej kroków pomocniczych opartych na aproksymacji szeregiem Taylora zadanej funkcji. Możemy także powiedzieć, że metoda Eulera nie bierze pod uwagę krzywizny funkcji, więc dla różnych kroków całkowania zwraca różne wartości. RK bierze krzywiznę pod uwagę (jak bardzo to zależy od rzędu).
+
+
+
 
 \end{document}
