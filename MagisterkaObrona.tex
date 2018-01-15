@@ -315,7 +315,8 @@ Metoda nie uwzględnia jednak efektów świetlnych zależnych od położenia obs
 \subsubsection{Path tracing}
 Algorytm przebiega następująco: z punktu w którym znajduje się obserwator wypuszczane są promienie. Jeśli promień trafi w jakiś obiekt, z punktu przecięcia (rekursywnie) wypuszczane są kolejne promienie (co najmniej jeden), przy czym kierunek nowych promieni jest losowy; od jakości funkcji losującej zależy jakość obrazu. Każdy obiekt może pochłaniać lub emitować światło.
 
-Tworzenie pojedynczej ścieżki kończy się, gdy głębokość rekursji przekroczy pewien limit. Wówczas wyznacza się ostateczne natężenie światła, jakie dociera do obserwatora: składa się na nie natężenie pochodzące od obiektów emitujących, które następnie ścieżce jest tłumione; tłumienie zależy od współczynnika pochłaniania światła dla każdego trafionego obiektu (funkcja BRDF, uwzględniające m.in. kąt pomiędzy promieniem padającym i odbitym).
+Tworzenie pojedynczej ścieżki kończy się, gdy głębokość rekursji przekroczy pewien limit. Wówczas wyznacza się ostateczne natężenie światła, jakie dociera do obserwatora: składa się na nie natężenie pochodzące od obiektów emitujących, które następnie ścieżce jest tłumione; tłumienie zależy od współczynnika pochłaniania światła dla każdego trafionego obiektu (funkcja BRDF, uwzględniające m.in. kąt pomiędzy promieniem padającym i odbitym).\\
+Powstaje \textbf{zaszumiony} obraz! (filtr macierzowy medianowy chyba naprawi)
 
 \subsubsection{Photon mapping}
 Algorytm dzieli się na dwie fazy: sianie i zbieranie fotonów.\\
@@ -330,6 +331,45 @@ Zbieranie:
 	\item Na podstawie pierwszego przebiegu (siania) wyznaczamy informacje o oświetleniu miejsca kolizji.
 	\item Odbijamy promień w odpowiednim kierunku.
 \end{itemize}
+
+\subsection{Teksturowanie}
+
+\subsubsection{Normal map}
+Zapisujemy wektory normalnych do tekstury. W czasie renderowania zamiast wyliczać normalne, pobieramy je z tekstury. W ten sposób możemy uzyskać efekt nierówności obiektu. Bump map to stara wersja mapy normalnych, która zamiast wektora trzyma skalar. Gdy chcemy uzyskać efekt głębi to przyciemniamy pixel (na podstawie grayscale z bump map), a gdy wypukłość to rozjaśniamy. 
+
+\subsubsection{Displacement map}
+Zapisujemy wektory przesunieć do tekstury. W czasie renderowania zmieniamy pozycje wierzchołków o wartość z mapy. Height map to uproszczona wersja mapy przesunięć, która zamiast wektora trzyma skalar (więc zmienia tylko wysokość). Height mapy stosujemy np. do generowania górzystego terenu. Jednak nie da się zrobić podcięć (jaskiń). Displacement map stosujemy do dodania szczegółowości geometrii. 
+
+
+\subsection{Widoczność}
+Metody w screen space:
+\begin{enumerate}
+	\item Algorytm malarski -- sortujemy obiekty po z-cie. Rysujemy od najdalszego do najbliższego. Nie działa dla cyklicznie nakładających się obiektów i przy penetracji.
+	\item Scan linia -- idziemy scanlinią wierszami po ekranie. W punktach przecięć obiektów sprawdzamy, który jest na górze i kolorujemy w jego kolorze aż do następnego przecięcia. Algorytm scanlinii: sortujemy krawędzie, mamy listę krawędzi aktywnych.
+	\item Z-buffer -- przechodzimy po obiektach po kolei. Dla każdego pixela sprawdzamy jego z i porównujemy z aktualną wartością z-buffera. Jeżeli obecny pixel ma mniejsze z, to pixel przyjmuje jego kolor. Algorytm powszechnie stosowany.
+\end{enumerate}
+~\\
+Drzewa:
+\begin{enumerate}
+	\item BSP (binary space partitioning) -- dzielimy przestrzeń na dwie części. Nie muszą być równe ani prostopadłe do osi.
+	\item KD-drzewo -- jak BSP, ale dzielimy ortogonalnie.
+	\item Octree -- dzielimy na 8 takich samych sześcianów.
+\end{enumerate}
+
+
+\subsection{Cienie}
+
+\subsubsection{Shadow mapping}
+Jest to metoda dwuetapowa (dwa passy) i jest domyślnie stworzona dla direction light, ale są możliwe modyfikacje dla point light (cubemap). Renderujemy scenę z perspektywy źródła światła i zapisujemy z-buffer do tekstury (shadow mapy). Przechodzimy do drugiego etapu. Patrzymy z kamery. Każdy pixel, który widzimy, transformujemy do układu współrzędnych światła. Następnie sprawdzamy czy jego z jest większy od z zapamiętanego w shadow mapie. Jeżeli tak to ten pixel jest w cieniu (czyli czarny + ambient). Jakość cienia jest zależna od rozdzielczości mapy, każde źródło światła wymaga swojej shadow mapy. 
+
+\subsubsection{Shadow volumes}
+Bierzemy wektor kierunku od światła do bryły. Następnie w tą stronę wydłużamy kontur bryły w nieskończoność (w praktyce do far-plane). Patrzymy z kamery czy pixel jest w bryle cienia. Aby to zrobić liczymy liczbę przecięć z bryłą cienia. Ilość przecięć jest zapisywana w stencil bufforze. Przy każdym przecięciu ściany bryły cienia inkrementujemy/dekrementujemy zmienną w stencil bufforze. Jeżeli ostatecznie wychodzi nam 0, to pixel nie jest zacieniony. Mamy dwie metody: z-fail i z-pass. Z-fail jest lepsza, bo działa gdy kamera jest w cieniu. Czas obliczeń jest zależny od geometrii (jeśli mamy dużo trójkątów, to wyznaczenie brył cienia jest kosztowne). 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Pictures/shadow_volumes.png}
+	\caption{Shadow volumes}
+\end{figure}
 
 \section{Algebra Zewnętrzna}
 
