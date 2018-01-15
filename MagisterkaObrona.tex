@@ -46,6 +46,13 @@ Interpolacja w węzłach Czebyszewa jest prawie najlepsza (znika efekt Rungego).
 \subsection{Baza B-Spline}
 They are much more complex. There are two interesting properties that are not part of the Bézier basis functions, namely: (1) the domain is subdivided by knots, and (2) basis functions are not non-zero on the entire interval. In fact, each B-spline basis function is non-zero on a few adjacent subintervals and, as a result, B-spline basis functions are quite "local".
 
+\section{Postacie normalne relacyjnych baz danych}
+\begin{enumerate}
+	\item Pierwsza NF -- atomiczność danych.
+	\item Druga NF -- kolumny zależą od całego klucza głównego (a nie np. od tylko jednego elementu).
+	\item Trzecia NF -- żaden atrybut niekluczowy nie jest zależny od innego atrybutu niekluczowego (np. stanowisko-pensja).
+\end{enumerate}
+
 \setcounter{section}{22}
 \section{Metody interpolacji obrotów}
 \begin{enumerate}
@@ -355,6 +362,8 @@ Drzewa:
 	\item KD-drzewo -- jak BSP, ale dzielimy ortogonalnie.
 	\item Octree -- dzielimy na 8 takich samych sześcianów.
 \end{enumerate}
+~\\
+Zastosowania kd-drzew: określanie widoczności, wypełnianie wielokątów, optymalizacje systemów cząsteczkowych (w niektórych przypadkach możemy łączyć grupy cząste w jedną, np. gdzy mamy dwie zwarte grupy położone od siebie daleko, to możemy je potraktować jak dwie większe cząstki).
 
 
 \subsection{Cienie}
