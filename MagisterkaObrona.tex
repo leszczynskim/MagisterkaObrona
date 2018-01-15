@@ -312,7 +312,24 @@ Dyskretyzujemy elementy sceny na płaty. Radiosity wyznacza globalny rozkład na
 
 Metoda nie uwzględnia jednak efektów świetlnych zależnych od położenia obserwatora takich jak rozbłyski na powierzchniach metalicznych, odbicia zwierciadlane, załamanie światła itp.
 
+\subsubsection{Path tracing}
+Algorytm przebiega następująco: z punktu w którym znajduje się obserwator wypuszczane są promienie. Jeśli promień trafi w jakiś obiekt, z punktu przecięcia (rekursywnie) wypuszczane są kolejne promienie (co najmniej jeden), przy czym kierunek nowych promieni jest losowy; od jakości funkcji losującej zależy jakość obrazu. Każdy obiekt może pochłaniać lub emitować światło.
 
+Tworzenie pojedynczej ścieżki kończy się, gdy głębokość rekursji przekroczy pewien limit. Wówczas wyznacza się ostateczne natężenie światła, jakie dociera do obserwatora: składa się na nie natężenie pochodzące od obiektów emitujących, które następnie ścieżce jest tłumione; tłumienie zależy od współczynnika pochłaniania światła dla każdego trafionego obiektu (funkcja BRDF, uwzględniające m.in. kąt pomiędzy promieniem padającym i odbitym).
+
+\subsubsection{Photon mapping}
+Algorytm dzieli się na dwie fazy: sianie i zbieranie fotonów.\\
+Siane:
+\begin{itemize}
+	\item Wystrzeliwujemy dużo fotonów z każdego źródła światła i pozwalamy im poodbijać się po scenie.
+	\item Przy każdym odbiciu zostawiamy informację o niesionej energii i kierunku przybycia.
+\end{itemize}
+Zbieranie:
+\begin{itemize}
+	\item Wystrzeliwujemy promienie od oka w stronę sceny.
+	\item Na podstawie pierwszego przebiegu (siania) wyznaczamy informacje o oświetleniu miejsca kolizji.
+	\item Odbijamy promień w odpowiednim kierunku.
+\end{itemize}
 
 \section{Algebra Zewnętrzna}
 
