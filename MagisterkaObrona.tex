@@ -490,7 +490,7 @@ gdzie: \\
 $i=1:U$ \\
 $G_{i}$ - gradient i-tego ograniczenia \\
 ~\\
-\textbf{Zasada prac wirtualnych} redukuje liczbę równań w mechanice d'Alamberta. Aby ją zastosować, należy wziąć wektor $v$ z przestrzeni stycznej do wszystkich ograniczeń. Siły reakcji w d'Alambercie są prostopadłe do ograniczeń, więc taki magiczny wektor $v$ nam je wszystkie wyzeruje. Dzięki temu upraszczamy układ, a liczba równań spada do $M - U$.\\
+\textbf{Zasada prac wirtualnych} redukuje liczbę równań w mechanice d'Alamberta. Aby ją zastosować, należy wziąć wektor $v$ z przestrzeni stycznej do wszystkich ograniczeń. Siły reakcji w d'Alambercie są prostopadłe do ograniczeń, więc taki magiczny wektor $v$ nam je wszystkie wyzeruje (robimy dot product stronami). Dzięki temu upraszczamy układ, a liczba równań spada do $M - U$.\\
 ~\\
 \textbf{Mechanika Lagrange'a} jest niezależna od układu współrzędnych. Dzięki temu możemy łatwo rozwiązywać skomplikowane układy ruchu - musimy tylko opisać parametryzację. Mechanika Lagrange'a bazuje na energii układu. 
 $$ \dfrac{d}{dt} (\dfrac{\partial L}{\partial\dot{Q_{i}}}) - \dfrac{\partial L}{\partial Q_{i}} = 0$$
@@ -510,13 +510,14 @@ $U$ -- energia potencjalna \\
 $p_{i}$ -- współrzędne pędu
 $q_{i}$ -- współrzędne parametryzacji
 
-\subsection{Systemy dynamiczne}
-\textbf{System dynamiczny} gładkie pole wektorowe na N-wymiarowej rozmaitości różniczkowej zwanej przestrzenią stanów systemu. Każdy stan należący do tej przestrzenii może zmieniać się w czasie zgodnie z funkcją zmiany stanu (równaniem różniczkowym). \\
+\subsection{Układy dynamiczne}
+\textbf{Układ dynamiczny} gładkie pole wektorowe na N-wymiarowej rozmaitości różniczkowej zwanej przestrzenią stanów układu. Każdy stan należący do tej przestrzenii może zmieniać się w czasie zgodnie z funkcją zmiany stanu (równaniem różniczkowym). \\
+$$\dot(x) = v(x,t)$$
 System dynamiczny nie zależy od czasu, to wtedy jest autonomiczny. \\
 Jeżeli funkcja zmiany stanu jest liniowa i system jest autonomiczny to jest to system LTI (Linear Time Invariant).\\
 ~\\
 \subsubsection{Stabilność}
-Na przykładzie wahadła: mamy dwa punkty równowagi - na górze i na dole. Górny nie jest stabilny, bo po wytrąceniu wahadła z tego położenia nigdy do niego nie wrócimy. Punkt na dole jest stabilny, bo wahadło do niego wraca. Stabilność z definicji oznacza, że po wytrąceniu wahadło wróci w otoczenie punktu równowagi. Jednak nasz punkt na dole wahadła jest "bardziej" stabilny, ponieważ jest stabilny asymptotycznie. Znaczy to, że wraz z upływem czasu zawsze zbliża się on do punktu równowagi (granica dązy do 0). W praktyce wiemy, że takie wahadło wróci dokładnie do punktu równowagi, a nie zatrzyma się gdzieś obok. Do sprawdzania czy punkt jest stabilny może nam posłużyć kryterium Lyapunova.\\
+Na przykładzie wahadła: mamy dwa punkty równowagi - na górze i na dole. Górny nie jest stabilny, bo po wytrąceniu wahadła z tego położenia nigdy do niego nie wrócimy. Punkt na dole jest stabilny, bo wahadło do niego wraca. Stabilność z definicji oznacza, że po wytrąceniu wahadło wróci w otoczenie punktu równowagi. Jednak nasz punkt na dole wahadła jest ,,bardziej'' stabilny, ponieważ jest stabilny asymptotycznie. Znaczy to, że wraz z upływem czasu zawsze zbliża się on do punktu równowagi (granica dązy do 0). W praktyce wiemy, że takie wahadło wróci dokładnie do punktu równowagi, a nie zatrzyma się gdzieś obok. Do sprawdzania czy punkt jest stabilny może nam posłużyć kryterium Lyapunova.\\
 
  \subsection{Sterowanie}
  System sterowania jest to system dynamiczny z dodatkowym zbiorem parametrów $u$, za pomocą których możemy zmieniać pole wektorowe (trajektorię) systemu. \\
@@ -540,7 +541,7 @@ Na przykładzie wahadła: mamy dwa punkty równowagi - na górze i na dole. Gór
 Transformata Laplace'a pozwala nam przejść z równań różniczkowych określonyw w dziedzinie rzeczywistej, do równań algebraicznych w zespolonych. W ten sposób możemy obliczyć pierwiastki, a następnie za pomocą odwróconej tranformaty wracamy do dziedziny rzeczywistej. Odwrotna transformata jest słaba numerycznie, więc oblicza się ją symbolicznie lub sprawdza wartości w tabelach. Transformatę Laplace'a stosujemy tylko do liniowych równań różniczkowych ze stałymi współczynnikami (czyli LTI w rozumieniu z ćwiczeń). 
 
 \subsection{Stabilność układu LTI}
-Możemy pierwiastki wielomianu charakterystycznego. Jeżeli ich części rzeczywiste są mniejsze od zera to układ jest asymptotycznie stabilny. Możemy także to sprawdzić za pomocą Kryterium Routha lub Kryterium Hurvitza. Kryterium Routha - liczymy wielomian charakterystyczny. Jeżeli wszystkie współczynniki wielomianu są większe od zera i wszystkie elementy z pierwszej kolumny macierzy trójkątnej Routha też są większe od zera to system jest asymptotycznie stabilny. Kryterium Hurvitza: bierzemy wielomian charakterystyczny i jego współczynniki wkładamy do macierzy. Układ jest stabilny, gdy $a_{n} > 0$ i główne minory macierzy są dodatnie.
+Możemy wyznaczyć pierwiastki wielomianu charakterystycznego. Jeżeli ich części rzeczywiste są mniejsze od zera to układ jest asymptotycznie stabilny. Możemy także to sprawdzić za pomocą Kryterium Routha lub Kryterium Hurvitza. Kryterium Routha - liczymy wielomian charakterystyczny. Jeżeli wszystkie współczynniki wielomianu są większe od zera i wszystkie elementy z pierwszej kolumny macierzy trójkątnej Routha też są większe od zera to system jest asymptotycznie stabilny. Kryterium Hurvitza: bierzemy wielomian charakterystyczny i jego współczynniki wkładamy do macierzy. Układ jest stabilny, gdy $a_{n} > 0$ i główne minory macierzy są dodatnie.
 
 \subsection{Kontrolowalność}
 System musi być kontrolowalny, żebyśmy mogli zrobić z systemem co chcemy za pomocą wejścia.\\
@@ -559,7 +560,7 @@ Kontroler PID (proportional-integral-derivative) - kontroler zawierający trzy c
 \begin{enumerate}
 	\item Proporcjonalny jest po to, żeby dawać wejście proporcjonalne do błędu (w Bang-Bang zawsze dawaliśmy max lub min, co było bezsensu; P nam to poprawia). Czyli kompensuje błąd bieżący.
 	\item Itegral (całkowy) Kompensuje akumulację błędów z przeszłości.
-	\item Derivative (różniczkowy) kompensuje przewidywanie błędy w przyszłości.
+	\item Derivative (różniczkowy) kompensuje przewidywane błędy w przyszłości.
 \end{enumerate}
 PID jest najczęściej stosowanym kontrolerem.
 
