@@ -32,7 +32,7 @@ Algorytm de Casteljau służy do obliczania wartości wielomianów w Bazie Berns
 Niewielkim kosztem możemy uzyskąć nie tylko wartość, ale i pochodną w punkcie. Należy odczytać obie wartości algorytmu dla $n-1$ odjąć je i pomnożyć przez $n$.
 
 \subsection{Twierdzenie Weierstrassa}
-Każdą funkcję ciągłą o wartościach rzeczywistych na przedziale domkniętym $[a,b]$ można przybliżyć jednostajnie z dowolną dokładnością wielomianami Bernsteina. Im więcej punktów kontrolnych, tym większa dokładność.
+Każdą funkcję ciągłą o wartościach rzeczywistych na przedziale domkniętym $[a,b]$ można przybliżyć jednostajnie z dowolną dokładnością wielomianami (np. wielomianami Bernsteina). Im więcej punktów kontrolnych, tym większa dokładność.
 
 \subsection{Baza Hermite'a}
 Jeżeli znamy wartości na krańcach przedziału i znamy wartości pochodnych w tych punktach, to podstawiamy do wzoru i mamy aproksymację funkcji na przedziale.
@@ -104,7 +104,7 @@ RRT (Rapidly-exploring random tree):
 
 
 \section{Powierzchnie obciętę i standard IGES}
-Standard IGES jest standardem międzynarodowym dotyczącym danych topologicznych, geometrycznych i niegeometrzyczne (np. materiały, cechy użytkowe). Na podstawie tego standardu powstał również format pliku o tej samej nazwie pozwalający na zapisanie ponad 150 różnych typów obiektów, np. powierzchni trymowanych.
+Standard IGES jest standardem międzynarodowym dotyczącym danych topologicznych, geometrycznych i niegeometrzycznych (np. materiały, cechy użytkowe). Na podstawie tego standardu powstał również format pliku o tej samej nazwie pozwalający na zapisanie ponad 150 różnych typów obiektów, np. powierzchni trymowanych.
 
 Powierzchnie obcięte składają się z dwóch części: powierzchni bazowej oraz krzywych trymowania, które wyznaczają obszary trymowania.
 
@@ -380,6 +380,32 @@ Bierzemy wektor kierunku od światła do bryły. Następnie w tą stronę wydłu
 	\caption{Shadow volumes}
 \end{figure}
 
+\subsubsection{Cienie miękkie}
+\begin{enumerate}
+	\item PCF -- Wyznaczamy mapę cienia i na jej podstawie sprawdzamy czy dany piksel jest lub nie jest w cieniu (czyli ma wartość 0 lub 1). Następnie sprawdzamy jego sąsiadów (np. macierz 3x3) i uśredniamy wynik. Przykład: wyszło nam, że nasz pixel jest w cieniu (czyli ma wartość 0). Ale po uśrednieniu wyników jego sąsiadów wyszło nam 0,55. Więc zamiast brać 0 jako jego intensywność, bierzemy 0,55 (i mamy szarość).
+	\item VSM (variance shadow maps) -- zapamiętujemy z oraz $z^2$. Następnie na podstawie dwóch pierwszych momentów rozkładu prawdopodobieństwa określamy czy pixel jest w cieniu.
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Pictures/shadows_comparison.png}
+	\caption{}
+\end{figure}
+
+\subsubsection{Antyaliasing}
+Tekstur:
+\begin{enumerate}
+	\item Mip-mapy -- wraz z odległością zmniejszamy poziom szczegółowości tekstury (musimy mieć kilka tekstur).
+	\item Rip-mapy -- jak mip mapy, ale mamy różne poziomy szczegółowości w zależności od kierunku (np. pas startowy).
+\end{enumerate}
+Sceny:
+\begin{enumerate}
+	\item Super-sampling (SSAA) -- renderujemy na x-razy większą rozdzielczość i uśredniamy.
+	\item Multi-sampling (MSAA) -- dzielimy poksel na x kawałków i w zależności ile nam przetnie linia to taki kolor bierzemy (jak przetnie 1 pixel z 4 to 25\% koloru).
+	\item FXAA -- wyszukujemy patternów i odpowiednio przetwarzamy.
+	\item TXAA -- mieszamy kilka klatek.
+\end{enumerate}
+
 \section{Algebra Zewnętrzna}
 
 \subsection{Forma różniczkowa (k-forma)}
@@ -556,7 +582,7 @@ Jeżeli system jest kontrolowalny i obserwowalny to \textbf{istnieje kontroler},
 Serwomechanizm jest jak closed loop control tylko, że nie tylko stabilizuje system i kompensuje odchylenia, ale także liczy pożądaną kontrolę. Jest szeroko wykorzystywany w praktyce, np. w sterowaniu łodzią.
 
 \subsection{PID}
-Kontroler PID (proportional-integral-derivative) - kontroler zawierający trzy człony poprawiające. 
+Kontroler PID (proportional-integral-derivative) - kontroler zawierający trzy człony poprawigające. 
 \begin{enumerate}
 	\item Proporcjonalny jest po to, żeby dawać wejście proporcjonalne do błędu (w Bang-Bang zawsze dawaliśmy max lub min, co było bezsensu; P nam to poprawia). Czyli kompensuje błąd bieżący.
 	\item Itegral (całkowy) Kompensuje akumulację błędów z przeszłości.
