@@ -94,13 +94,13 @@ Przydatną strukturą danych są kd-drzewa.\\
 ~\\
 RRT (Rapidly-exploring random tree):
 \begin{enumerate}
-	\item Sprawdzamy czy wierchołek startowy jest dopuszczalny (nie jest w kolizji).
+	\item Sprawdzamy czy wierzchołek startowy jest dopuszczalny (nie jest w kolizji).
 	\item Wykonujemy k kroków polegających na wylosowaniu nowej konfiguracji $q_{i}$ i łączymy ją do najbliższego wierzchołka (jeżeli nie ma kolizji).
 \end{enumerate} 
  
 \setcounter{section}{34}
 \section{Interpolacja i aproksymacja w bazach B-spline}
-\hyperlink{Prezentacja}{http://www.cad.zju.edu.cn/home/zhx/GM/009/00-bsia.pdf} 
+http://www.cad.zju.edu.cn/home/zhx/GM/009/00-bsia.pdf
 
 
 \section{Powierzchnie obciętę i standard IGES}
@@ -123,7 +123,8 @@ Boundary representation składa się z dwóch części: topologii oraz geometrii
 
 \subsection{Porównanie CSG}
 CSG jest drzewem i zapamiętuje kolejne operacje wykonane na prymitywach. Jest budowane z prymitywów i podstawowych operacji boolowskich.\\
-B-rep ma większą liczbę operacji, np. wyciągnięcie (extrusion) i wygładzenie krawędzi (chamfer), co pozwala na bardziej "ludzkie" tworzenie modeli.
+~\\
+B-rep ma większą liczbę operacji, np. wyciągnięcie (extrusion) i wygładzenie krawędzi (chamfer), co pozwala na bardziej ,,ludzkie'' tworzenie modeli.
 
 \section{Metody lokalizacji obliczeń geometrycznych}
 Przykładem problemu lokalizacji obliczeń geometrycznych jest wykrycie kolizji dwóch złożonych obiektów. Zamiast sprawdzać każdy ich element z każdym, chcemy uprościć obliczenia, odrzucając obszary, w których wiemy, że kolizja raczej nie zajdzie.
@@ -315,19 +316,19 @@ Przykładowe modele fizyczne (różnią się rozkładem mikroluster):
 \end{figure}
 
 \subsubsection{Radiosity}
-Dyskretyzujemy elementy sceny na płaty. Radiosity wyznacza globalny rozkład natężenia światła uwzględniając pochłonięcia i odbicia światła jakie mają miejsce na wszystkich powierzchniach znajdujących się na scenie. Czyli modeluje prawie dokładnie to samo, co obserwuje się w rzeczywistym świecie, gdzie każda powierzchnia pochłania światło, ale także część odbija. Radiosity uwzględnia wyłącznie odbicia rozproszone, tj. intensywność światła odbitego jest niezależna od kierunku - dzięki temu uzyskane wyniki są niezależne od położenia obserwatora, co pozwala na wielokrotną, dowolną wizualizację sceny bez ponawiania obliczeń.
+Dyskretyzujemy elementy sceny na płaty (kd-drzewem??). Radiosity wyznacza globalny rozkład natężenia światła uwzględniając pochłonięcia i odbicia światła jakie mają miejsce na wszystkich powierzchniach znajdujących się na scenie. Czyli modeluje prawie dokładnie to samo, co obserwuje się w rzeczywistym świecie, gdzie każda powierzchnia pochłania światło, ale także część odbija. Radiosity uwzględnia wyłącznie odbicia rozproszone, tj. intensywność światła odbitego jest niezależna od kierunku - dzięki temu uzyskane wyniki są niezależne od położenia obserwatora, co pozwala na wielokrotną, dowolną wizualizację sceny bez ponawiania obliczeń.
 
 Metoda nie uwzględnia jednak efektów świetlnych zależnych od położenia obserwatora takich jak rozbłyski na powierzchniach metalicznych, odbicia zwierciadlane, załamanie światła itp.
 
 \subsubsection{Path tracing}
-Algorytm przebiega następująco: z punktu w którym znajduje się obserwator wypuszczane są promienie. Jeśli promień trafi w jakiś obiekt, z punktu przecięcia (rekursywnie) wypuszczane są kolejne promienie (co najmniej jeden), przy czym kierunek nowych promieni jest losowy; od jakości funkcji losującej zależy jakość obrazu. Każdy obiekt może pochłaniać lub emitować światło.
+Algorytm przebiega następująco: z punktu w którym znajduje się obserwator wypuszczane są promienie (wiele promieni przez każdy pixel). Jeśli promień trafi w jakiś obiekt, z punktu przecięcia (rekursywnie) wypuszczane są kolejne promienie (co najmniej jeden), przy czym kierunek nowych promieni jest losowy; od jakości funkcji losującej zależy jakość obrazu. Każdy obiekt może pochłaniać lub emitować światło.
 
-Tworzenie pojedynczej ścieżki kończy się, gdy głębokość rekursji przekroczy pewien limit. Wówczas wyznacza się ostateczne natężenie światła, jakie dociera do obserwatora: składa się na nie natężenie pochodzące od obiektów emitujących, które następnie ścieżce jest tłumione; tłumienie zależy od współczynnika pochłaniania światła dla każdego trafionego obiektu (funkcja BRDF, uwzględniające m.in. kąt pomiędzy promieniem padającym i odbitym).\\
+Tworzenie pojedynczej ścieżki kończy się, gdy głębokość rekursji przekroczy pewien limit. Wówczas wyznacza się ostateczne natężenie światła, jakie dociera do obserwatora: składa się na nie natężenie pochodzące od obiektów emitujących, które następnie na ścieżce jest tłumione; tłumienie zależy od współczynnika pochłaniania światła dla każdego trafionego obiektu (funkcja BRDF, uwzględniające m.in. kąt pomiędzy promieniem padającym i odbitym).\\
 Powstaje \textbf{zaszumiony} obraz! (filtr macierzowy medianowy chyba naprawi)
 
 \subsubsection{Photon mapping}
 Algorytm dzieli się na dwie fazy: sianie i zbieranie fotonów.\\
-Siane:
+Sianie:
 \begin{itemize}
 	\item Wystrzeliwujemy dużo fotonów z każdego źródła światła i pozwalamy im poodbijać się po scenie.
 	\item Przy każdym odbiciu zostawiamy informację o niesionej energii i kierunku przybycia.
@@ -766,7 +767,7 @@ $W$ -- wyznacznik główny\\
 $W_{i}$ - wyznaczniki, w których współczynniki przy $x_{i}$ zastępujemy wyrazami wolnymi.\\
 ~\\
 \textbf{Metoda eliminacji Gaussa}\\
-Metoda eliminacji Gaussa dzieli się na dwa etapy:
+Metoda eliminacji Gaussa (złożoność $O(n^3)$) dzieli się na dwa etapy:
 \begin{enumerate}
 	\item Sprowadzenie macierzy do postaci trójkątnej.
 	\item Rozwiązanie takiego układu.
@@ -780,7 +781,7 @@ Te metody trzeba stosować, żeby uniknąć sytuacji, gdzie w czasie działania 
 ~\\
 \textbf{Rozkład LU}
 $$PA = LU$$
-Rozkład LU możemy uzyskać za pomocą eliminacji Gaussa, ale bez "doklejania" do $A$ wektora $b$. Wtedy z eliminacji otrzymujemy macierz schodkową, czylu $U$, a $L$ to złożenie operacji elementarnych na $A$, które doprowadziłY do $U$.\\
+Rozkład LU możemy uzyskać za pomocą eliminacji Gaussa, ale bez "doklejania" do $A$ wektora $b$. Wtedy z eliminacji otrzymujemy macierz schodkową, czylu $U$, a $L$ to złożenie operacji elementarnych na $A$, które doprowadziłY do $U$. Znając rozkład L i U mamy złożoność $O(n^2)$.\\
 Inną metodą rozkładu LU jest metoda Doolittle'a.\\
 ~\\
 \textbf{Rozkład Cholesky'ego-Banachawiecza}\\
